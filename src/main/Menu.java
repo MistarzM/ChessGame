@@ -1,9 +1,12 @@
 package main;
 
 import javax.swing.*;
-import java.awt.*;  // This import is needed to use: Color, Dimension, Graphics, GridBagLayout
+import java.awt.*;
 
 public class Menu extends JFrame {
+
+    private JButton startButton;
+    private JButton settingsButton;
 
     public Menu(){
         this.getContentPane().setBackground(Color.black);
@@ -11,7 +14,7 @@ public class Menu extends JFrame {
         this.setMinimumSize(new Dimension(750, 750));
         this.setLocationRelativeTo(null);
 
-        JButton startButton = new JButton("start");
+        startButton = new JButton("start");
         startButton.addActionListener(e -> {
             this.getContentPane().removeAll();
             Board board = new Board();
@@ -19,14 +22,24 @@ public class Menu extends JFrame {
             this.revalidate();
             this.repaint();
         });
-        this.add(startButton);
 
-        JButton settingsButton = new JButton("Settings");
+        settingsButton = new JButton("Settings");
         settingsButton.addActionListener(e->{
+            this.getContentPane().removeAll();
             Settings settings = new Settings(this);
-            settings.setVisible(true);
+            this.add(settings);
+            this.revalidate();
+            this.repaint();
         });
-        this.add(settingsButton);
+
+        showMenu();
     }
 
+    public void showMenu() {
+        this.getContentPane().removeAll();
+        this.add(startButton);
+        this.add(settingsButton);
+        this.revalidate();
+        this.repaint();
+    }
 }
