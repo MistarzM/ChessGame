@@ -10,7 +10,7 @@ public class Main {
         JFrame frame = new JFrame();
         frame.getContentPane().setBackground(Color.black);
         frame.setLayout(new GridBagLayout());
-        frame.setMinimumSize(new Dimension(1000, 1000));
+        frame.setMinimumSize(new Dimension(1200, 1200));
         frame.setLocationRelativeTo(null);
 
         Board board = new Board();
