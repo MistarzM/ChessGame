@@ -6,7 +6,8 @@ import java.awt.*;
 public class Board extends JPanel {
 
     public static int tileSize = 80;
-
+    public static Color color1 = new Color(255,255,255);
+    public static Color color2 = new Color(0,0,0);
     int cols = 8;
     int rows = 8;
 
@@ -19,7 +20,7 @@ public class Board extends JPanel {
 
         for(int row = 0; row < rows; row++){
             for(int col = 0; col < cols; col++){
-                graphics.setColor((col + row) % 2 == 0 ? new Color(243, 233, 158) : new Color(150, 116, 30));
+                graphics.setColor((col + row) % 2 == 0 ? color1 : color2);
                 graphics.fillRect(col * tileSize, row * tileSize, tileSize, tileSize);
             }
         }

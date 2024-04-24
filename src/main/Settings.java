@@ -9,14 +9,18 @@ public class Settings extends JPanel {
     private Menu menu;
     private Dimension initialSize;
     private int initialTileSize;
+    private Color initialColor1;
+    private Color initialColor2;
 
     public Settings(Menu menu) {
         this.menu = menu;
-        this.setLayout(new FlowLayout());
+        this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 
 
         this.initialSize = menu.getSize();
         this.initialTileSize = Board.tileSize;
+        this.initialColor1 = Board.color1;
+        this.initialColor2 = Board.color2;
 
         this.setBackground(Color.black);
 
@@ -46,6 +50,26 @@ public class Settings extends JPanel {
 
         mediumButton.setSelected(true);
 
+        JButton colorButton1 = new JButton();
+        colorButton1.setBackground(initialColor1);
+        colorButton1.addActionListener(e -> {
+            Color newColor = JColorChooser.showDialog(null, "Choose a color", initialColor1);
+            if (newColor != null) {
+                Board.color1 = newColor;
+                colorButton1.setBackground(newColor);
+            }
+        });
+
+        JButton colorButton2 = new JButton();
+        colorButton2.setBackground(initialColor2);
+        colorButton2.addActionListener(e -> {
+            Color newColor = JColorChooser.showDialog(null, "Choose a color", initialColor2);
+            if (newColor != null) {
+                Board.color2 = newColor;
+                colorButton2.setBackground(newColor);
+            }
+        });
+
         JButton saveButton = new JButton("Save");
         saveButton.addActionListener(e->{
             menu.showMenu();
@@ -54,12 +78,18 @@ public class Settings extends JPanel {
         backButton.addActionListener(e ->{
             menu.setSize(initialSize);
             Board.tileSize = initialTileSize;
+            Board.color1 = initialColor1;
+            Board.color2 = initialColor2;
             menu.showMenu();
         });
         this.add(new JLabel("Size:"));
         this.add(smallButton);
         this.add(mediumButton);
         this.add(bigButton);
+        this.add(new JLabel("Color 1:"));
+        this.add(colorButton1);
+        this.add(new JLabel("Color 2:"));
+        this.add(colorButton2);
         this.add(saveButton);
         this.add(backButton);
     }
