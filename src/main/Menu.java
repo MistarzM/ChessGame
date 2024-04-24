@@ -11,7 +11,7 @@ public class Menu extends JFrame {
     public Menu(){
         this.getContentPane().setBackground(Color.black);
         this.setLayout(new GridBagLayout());
-        this.setMinimumSize(new Dimension(750, 750));
+        this.setSize(new Dimension(800, 800));
         this.setLocationRelativeTo(null);
 
         startButton = new JButton("start");
