@@ -5,7 +5,7 @@ import java.awt.*;
 
 public class Board extends JPanel {
 
-    public int tileSize = 85;
+    public static int tileSize = 80;
 
     int cols = 8;
     int rows = 8;

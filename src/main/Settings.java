@@ -16,12 +16,15 @@ public class Settings extends JPanel {
 
         JTextField widthField = new JTextField(5);
         JTextField heightField = new JTextField(5);
+        JTextField tileSizeField = new JTextField(5);
 
         JButton saveButton = new JButton("Save");
         saveButton.addActionListener(e->{
             int width = Integer.parseInt(widthField.getText());
             int height = Integer.parseInt(heightField.getText());
             menu.setMinimumSize(new Dimension(width, height));
+            int tileSize = Integer.parseInt(tileSizeField.getText());
+            Board.tileSize = tileSize;
             menu.showMenu();
         });
         JButton backButton = new JButton("Back");
@@ -32,6 +35,8 @@ public class Settings extends JPanel {
         this.add(widthField);
         this.add(new JLabel("Height:"));
         this.add(heightField);
+        this.add(new JLabel("Tile Size:"));
+        this.add(tileSizeField);
         this.add(saveButton);
         this.add(backButton);
     }
