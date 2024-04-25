@@ -3,10 +3,12 @@ package main;
 import javax.swing.*;
 import java.awt.*;
 
+import design.CustomButton;
+
 public class Menu extends JFrame {
 
-    private JButton startButton;
-    private JButton settingsButton;
+    private CustomButton startButton;
+    private CustomButton settingsButton;
 
     public Menu(){
         this.getContentPane().setBackground(Color.black);
@@ -14,7 +16,7 @@ public class Menu extends JFrame {
         this.setSize(new Dimension(800, 800));
         this.setLocationRelativeTo(null);
 
-        startButton = new JButton("start");
+        startButton = new CustomButton("start");
         startButton.addActionListener(e -> {
             this.getContentPane().removeAll();
             Board board = new Board();
@@ -23,7 +25,7 @@ public class Menu extends JFrame {
             this.repaint();
         });
 
-        settingsButton = new JButton("Settings");
+        settingsButton = new CustomButton("Settings");
         settingsButton.addActionListener(e->{
             this.getContentPane().removeAll();
             Settings settings = new Settings(this);
@@ -37,8 +39,11 @@ public class Menu extends JFrame {
 
     public void showMenu() {
         this.getContentPane().removeAll();
-        this.add(startButton);
-        this.add(settingsButton);
+        GridBagConstraints gbc = new GridBagConstraints();
+        gbc.gridwidth = GridBagConstraints.REMAINDER;
+        gbc.fill = GridBagConstraints.HORIZONTAL;
+        this.add(startButton, gbc);
+        this.add(settingsButton, gbc);
         this.revalidate();
         this.repaint();
     }
