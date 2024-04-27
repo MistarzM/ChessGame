@@ -1,5 +1,7 @@
 package main;
 
+import design.CustomButton;
+
 import javax.swing.*;
 import java.awt.*;
 import java.util.jar.JarEntry;
@@ -11,6 +13,8 @@ public class Settings extends JPanel {
     private int initialTileSize;
     private Color initialColor1;
     private Color initialColor2;
+    private CustomButton saveButton;
+    private CustomButton backButton;
 
     public Settings(Menu menu) {
         this.menu = menu;
@@ -22,7 +26,7 @@ public class Settings extends JPanel {
         this.initialColor1 = Board.color1;
         this.initialColor2 = Board.color2;
 
-        this.setBackground(Color.black);
+        this.setBackground(new Color(210, 180, 140));
 
         JRadioButton smallButton = new JRadioButton("Small");
         JRadioButton mediumButton = new JRadioButton("Medium");
@@ -70,11 +74,15 @@ public class Settings extends JPanel {
             }
         });
 
-        JButton saveButton = new JButton("Save");
+        saveButton = new CustomButton("Save");
+        saveButton.setPreferredSize(new Dimension(100, 30));
+        saveButton.setFont(new Font("Arial", Font.BOLD, 20));
         saveButton.addActionListener(e->{
             menu.showMenu();
         });
-        JButton backButton = new JButton("Back");
+        backButton = new CustomButton("Back");
+        backButton.setPreferredSize(new Dimension(100, 30));
+        backButton.setFont(new Font("Arial", Font.BOLD, 20));
         backButton.addActionListener(e ->{
             menu.setSize(initialSize);
             Board.tileSize = initialTileSize;
@@ -91,6 +99,7 @@ public class Settings extends JPanel {
         this.add(new JLabel("Color 2:"));
         this.add(colorButton2);
         this.add(saveButton);
+        this.add(Box.createVerticalStrut(10));
         this.add(backButton);
     }
 }
