@@ -62,4 +62,11 @@ public class Piece {
         graphics2D.drawImage(sprite, xPosition, yPosition, null);
     }
 
+    //movement
+    public boolean isMovementLegal(int col, int row){
+        return true;
+    }
+    public boolean moveOverlapPiece(int col, int row){
+        return false;
+    }
 }

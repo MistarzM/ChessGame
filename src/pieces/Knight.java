@@ -20,4 +20,11 @@ public class Knight extends Piece{
 
         this.sprite = (colorOfTeam ? sheets[2] : sheets[8]).getScaledInstance(Board.tileSize, Board.tileSize, BufferedImage.SCALE_SMOOTH);
     }
+
+    public boolean isMovementLegal(int col, int row){
+        if(Math.abs(col - this.col) * Math.abs(row - this.row) == 2){
+            return true;
+        }
+        return false;
+    }
 }

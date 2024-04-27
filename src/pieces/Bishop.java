@@ -19,4 +19,11 @@ public class Bishop extends Piece{
 
         this.sprite = (colorOfTeam ? sheets[3] : sheets[9]).getScaledInstance(Board.tileSize, Board.tileSize, BufferedImage.SCALE_SMOOTH);
     }
+
+    public boolean isMovementLegal(int col, int row){
+        if(Math.abs(col - this.col) == Math.abs(row - this.row)){
+            return true;
+        }
+        return false;
+    }
 }
