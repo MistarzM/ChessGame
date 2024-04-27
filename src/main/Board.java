@@ -1,6 +1,11 @@
 package main;
 
+import pieces.Pawn;
+import pieces.Rock;
 import pieces.Knight;
+import pieces.Bishop;
+import pieces.Queen;
+import pieces.King;
 import pieces.Piece;
 
 import javax.swing.*;
@@ -10,8 +15,8 @@ import java.util.ArrayList;
 public class Board extends JPanel {
 
     public static int tileSize = 80;
-    public static Color color1 = new Color(255,255,255);
-    public static Color color2 = new Color(0,0,0);
+    public static Color color1 = new Color(230,190,110);
+    public static Color color2 = new Color(180,140,70);
     int cols = 8;
     int rows = 8;
 
@@ -24,7 +29,41 @@ public class Board extends JPanel {
     }
 
     public void addPieces(){
-        piecesList.add(new Knight(this, false, 0, 1));
+        piecesList.add(new Pawn(this, false, 0, 1));
+        piecesList.add(new Pawn(this, false, 1, 1));
+        piecesList.add(new Pawn(this, false, 2, 1));
+        piecesList.add(new Pawn(this, false, 3, 1));
+        piecesList.add(new Pawn(this, false, 4, 1));
+        piecesList.add(new Pawn(this, false, 5, 1));
+        piecesList.add(new Pawn(this, false, 6, 1));
+        piecesList.add(new Pawn(this, false, 7, 1));
+
+        piecesList.add(new Pawn(this, true, 0, 6));
+        piecesList.add(new Pawn(this, true, 1, 6));
+        piecesList.add(new Pawn(this, true, 2, 6));
+        piecesList.add(new Pawn(this, true, 3, 6));
+        piecesList.add(new Pawn(this, true, 4, 6));
+        piecesList.add(new Pawn(this, true, 5, 6));
+        piecesList.add(new Pawn(this, true, 6, 6));
+        piecesList.add(new Pawn(this, true, 7, 6));
+
+        piecesList.add(new Rock(this, false, 0, 0));
+        piecesList.add(new Knight(this, false, 1, 0));
+        piecesList.add(new Bishop(this, false, 2, 0));
+        piecesList.add(new Queen(this, false, 3, 0));
+        piecesList.add(new King(this, false, 4, 0));
+        piecesList.add(new Bishop(this, false, 5, 0));
+        piecesList.add(new Knight(this, false, 6, 0));
+        piecesList.add(new Rock(this, false, 7, 0));
+
+        piecesList.add(new Rock(this, true, 0, 7));
+        piecesList.add(new Knight(this, true, 1, 7));
+        piecesList.add(new Bishop(this, true, 2, 7));
+        piecesList.add(new Queen(this, true, 3, 7));
+        piecesList.add(new King(this, true, 4, 7));
+        piecesList.add(new Bishop(this, true, 5, 7));
+        piecesList.add(new Knight(this, true, 6, 7));
+        piecesList.add(new Rock(this, true, 7, 7));
     }
 
 
