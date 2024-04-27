@@ -28,6 +28,17 @@ public class Board extends JPanel {
         addPieces();
     }
 
+    public Piece getPiece(int col, int row) {
+
+        for(Piece p : piecesList){
+            if (p.col == col && p.row == row){
+                return p;
+            }
+        }
+
+        return null;
+    }
+
     public void addPieces(){
         piecesList.add(new Pawn(this, false, 0, 1));
         piecesList.add(new Pawn(this, false, 1, 1));
