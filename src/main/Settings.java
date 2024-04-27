@@ -103,12 +103,12 @@ public class Settings extends JPanel {
         this.add(mediumButton);
         this.add(bigButton);
         this.add(Box.createVerticalStrut(10));
-        JLabel color1Label = new JLabel("Color1:");
+        JLabel color1Label = new JLabel("First color:");
         color1Label.setFont(new Font("Arial", Font.BOLD, 20));
         this.add(color1Label);
         this.add(colorButton1);
         this.add(Box.createVerticalStrut(10));
-        JLabel color2Label = new JLabel("Color2:");
+        JLabel color2Label = new JLabel("Second color:");
         color2Label.setFont(new Font("Arial", Font.BOLD, 20));
         this.add(color2Label);
         this.add(colorButton2);
