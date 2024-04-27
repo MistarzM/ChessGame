@@ -126,6 +126,17 @@ public class Board extends JPanel {
             }
         }
 
+        if(currentPiece != null) {
+            for (int r = 0; r < rows; r++) {
+                for (int c = 0; c < cols; c++) {
+                    if (isMoveLegal(new Move(this, currentPiece, c, r))) {
+                        graphics.setColor(new Color(70, 180, 60, 200));
+                        graphics.fillOval(c * tileSize + 4 * (tileSize/10), r * tileSize + 4 * (tileSize/10), tileSize/5, tileSize/5);
+                    }
+                }
+            }
+        }
+
         for(Piece p : piecesList){
             p.paint(graphics);
         }
