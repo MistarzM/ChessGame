@@ -22,21 +22,17 @@ public class Board extends JPanel {
 
     ArrayList<Piece> piecesList = new ArrayList<>();
 
+    public Piece currentPiece;
+    Event event = new Event(this);
+
     public Board(){
 
         this.setPreferredSize(new Dimension(cols * tileSize, rows * tileSize));
+
+        this.addMouseListener(event);
+        this.addMouseMotionListener(event);
+
         addPieces();
-    }
-
-    public Piece getPiece(int col, int row) {
-
-        for(Piece p : piecesList){
-            if (p.col == col && p.row == row){
-                return p;
-            }
-        }
-
-        return null;
     }
 
     public void addPieces(){
@@ -75,6 +71,48 @@ public class Board extends JPanel {
         piecesList.add(new Bishop(this, true, 5, 7));
         piecesList.add(new Knight(this, true, 6, 7));
         piecesList.add(new Rock(this, true, 7, 7));
+    }
+
+    public Piece getPiece(int col, int row) {
+
+        for(Piece p : piecesList){
+            if (p.col == col && p.row == row){
+                return p;
+            }
+        }
+
+        return null;
+    }
+
+    public void capture(Move move){
+        piecesList.remove(move.capture);
+    }
+
+    public void performMove(Move move){
+        move.piece.col = move.newCol;
+        move.piece.row = move.newRow;
+
+        move.piece.xPosition = move.newCol * tileSize;
+        move.piece.yPosition = move.newRow * tileSize;
+
+        capture(move);
+    }
+
+    public boolean isMoveLegal(Move move){
+
+        if(isSameTeam(move.piece, move.capture)){
+            return false;
+        }
+
+        return true;
+    }
+
+    public boolean isSameTeam(Piece piece1, Piece piece2){
+        if(piece1 == null || piece2 == null || piece1.colorOfTeam != piece2.colorOfTeam){
+            return false;
+        }
+
+        return true;
     }
 
 
