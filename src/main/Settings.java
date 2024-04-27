@@ -29,8 +29,14 @@ public class Settings extends JPanel {
         this.setBackground(new Color(210, 180, 140));
 
         JRadioButton smallButton = new JRadioButton("Small");
+        smallButton.setBackground(new Color(210, 180, 140));
+        smallButton.setFont(new Font("Arial", Font.PLAIN, 18));
         JRadioButton mediumButton = new JRadioButton("Medium");
+        mediumButton.setBackground(new Color(210, 180, 140));
+        mediumButton.setFont(new Font("Arial", Font.PLAIN, 18));
         JRadioButton bigButton = new JRadioButton("Big");
+        bigButton.setBackground(new Color(210, 180, 140));
+        bigButton.setFont(new Font("Arial", Font.PLAIN, 18));
 
         smallButton.addActionListener(e-> {
             menu.setSize(new Dimension(500, 500));
@@ -90,14 +96,23 @@ public class Settings extends JPanel {
             Board.color2 = initialColor2;
             menu.showMenu();
         });
-        this.add(new JLabel("Size:"));
+        JLabel sizeLabel = new JLabel("Size:");
+        sizeLabel.setFont(new Font("Arial", Font.BOLD, 20));
+        this.add(sizeLabel);
         this.add(smallButton);
         this.add(mediumButton);
         this.add(bigButton);
-        this.add(new JLabel("Color 1:"));
+        this.add(Box.createVerticalStrut(10));
+        JLabel color1Label = new JLabel("Color1:");
+        color1Label.setFont(new Font("Arial", Font.BOLD, 20));
+        this.add(color1Label);
         this.add(colorButton1);
-        this.add(new JLabel("Color 2:"));
+        this.add(Box.createVerticalStrut(10));
+        JLabel color2Label = new JLabel("Color2:");
+        color2Label.setFont(new Font("Arial", Font.BOLD, 20));
+        this.add(color2Label);
         this.add(colorButton2);
+        this.add(Box.createVerticalStrut(20));
         this.add(saveButton);
         this.add(Box.createVerticalStrut(10));
         this.add(backButton);
