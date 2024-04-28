@@ -38,7 +38,7 @@ public class Board extends JPanel {
         gameTimer = new GameTimer();
         panel = new JPanel(new BorderLayout());
         panel.add(this, BorderLayout.CENTER);
-        panel.add(gameTimer.getTimerLabel(), BorderLayout.EAST);
+        panel.add(gameTimer.getTimerLabel(), BorderLayout.NORTH);
         gameTimer.start();
 
         this.setPreferredSize(new Dimension(cols * tileSize, rows * tileSize));
