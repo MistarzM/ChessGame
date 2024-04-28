@@ -30,15 +30,33 @@ public class Pawn extends Piece{
     }
 
     public boolean isMovementLegal(int col, int row){
-        if(this.isFirstMove && this.colorOfTeam && Math.abs(this.col - col) == 0 && (this.row - row == 2 || this.row - row == 1)){       // first move, white
-            return true;
-        } else if (this.isFirstMove && !this.colorOfTeam && Math.abs(this.col - col) == 0 && (this.row - row == -2 || this.row - row == -1)){   // first move, black
-            return true;
-        } else if (!this.isFirstMove && this.colorOfTeam && Math.abs(this.col - col) == 0 &&  this.row - row == 1){     // !first move, white
-            return true;
-        } else if(!this.isFirstMove && !this.colorOfTeam && Math.abs(this.col - col) == 0 &&  this.row - row == -1){    // !first move, black
-            return true;
+        if (this.colorOfTeam) { // piece is white
+            if (this.col == col && row - this.row == -1 && board.getPiece(col, row) == null)
+                return true;
+
+            if(isFirstMove && this.col == col && row - this.row== -2 && board.getPiece(col, row) == null && board.getPiece(col, row + 1) == null)
+                return true;
+
+            if(col == this.col - 1 && row - this.row == -1 && board.getPiece(col, row) != null)     // capture left-top
+                return true;
+
+            if(col == this.col + 1 && row - this.row== -1 && board.getPiece(col, row) != null)      // capture right-top
+                return true;
         }
+        if(!this.colorOfTeam){    // piece is black
+            if (this.col == col && row - this.row == 1 && board.getPiece(col, row) == null)
+                return true;
+
+            if(isFirstMove && this.col == col && row - this.row == 2 && board.getPiece(col, row) == null && board.getPiece(col, row - 1) == null)
+                return true;
+
+            if(col == this.col - 1 && row - this.row == 1 && board.getPiece(col, row) != null)      // capture left-down
+                return true;
+
+            if(col == this.col + 1 && row - this.row == 1 && board.getPiece(col, row) != null)      // capture right-down
+                return true;
+        }
+
         return false;
     }
 
