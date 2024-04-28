@@ -21,7 +21,7 @@ public class Menu extends JFrame {
         startButton.setFont(new Font("Arial", Font.BOLD, 25));
         startButton.addActionListener(e -> {
             this.getContentPane().removeAll();
-            Board board = new Board();
+            Board board = new Board(this);
             this.add(board.getPanel());
             this.revalidate();
             this.repaint();

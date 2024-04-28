@@ -8,6 +8,8 @@ import pieces.Queen;
 import pieces.King;
 import pieces.Piece;
 
+import design.CustomButton;
+
 import javax.swing.*;
 import java.awt.*;
 import java.util.ArrayList;
@@ -25,6 +27,8 @@ public class Board extends JPanel {
     public Piece currentPiece;
     Event event = new Event(this);
 
+    private Menu menu;
+
     // timer
     private GameTimer gameTimer;
     private JPanel panel;
@@ -33,12 +37,26 @@ public class Board extends JPanel {
         return panel;
     }
 
-    public Board(){
+    public Board(Menu menu){
+        this.menu = menu;
+
+        panel = new JPanel(new BorderLayout());
+
+        JPanel topPanel = new JPanel(new BorderLayout());
+
+        CustomButton backButton = new CustomButton("Back");
+        backButton.setPreferredSize(new Dimension(Board.tileSize, Board.tileSize/2));
+        backButton.setFont(new Font("Arial", Font.BOLD, Board.tileSize/5));
+        backButton.addActionListener(e -> {
+            menu.showMenu();
+        });
+
+        topPanel.add(backButton, BorderLayout.WEST);
 
         gameTimer = new GameTimer();
-        panel = new JPanel(new BorderLayout());
+        topPanel.add(gameTimer.getTimerLabel(), BorderLayout.EAST);
+        panel.add(topPanel, BorderLayout.NORTH);
         panel.add(this, BorderLayout.CENTER);
-        panel.add(gameTimer.getTimerLabel(), BorderLayout.NORTH);
         gameTimer.start();
 
         this.setPreferredSize(new Dimension(cols * tileSize, rows * tileSize));
