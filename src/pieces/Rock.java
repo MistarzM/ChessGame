@@ -28,36 +28,18 @@ public class Rock extends Piece{
     }
 
     public boolean moveOverlapPiece(int col, int row){
+        int rowDirection = (row > this.row) ? 1 : -1;
+        int colDirection = (col > this.col) ? 1 : -1;
 
-
-        //top
-        if(this.row>row){
-            for(int r = this.row-1; r > row; --r){
+        if(this.row == row){
+            for(int c = this.col + colDirection; c != col; c += colDirection){
+                if(board.getPiece(c, this.row) != null){
+                    return true;
+                }
+            }
+        } else if(this.col == col){
+            for(int r = this.row + rowDirection; r != row; r += rowDirection){
                 if(board.getPiece(this.col, r) != null){
-                    return true;
-                }
-            }
-        }
-        //down
-        if(this.row<row){
-            for(int r = this.row+1; r < row; ++r){
-                if(board.getPiece(this.col, r) != null){
-                    return true;
-                }
-            }
-        }
-        //left
-        if(this.col > col){
-            for(int c = this.col-1; c > col; --c){
-                if(board.getPiece(c, this.row)!= null){
-                    return true;
-                }
-            }
-        }
-        //right
-        if(this.col < col){
-            for(int c = this.col+1; c < col; ++c){
-                if(board.getPiece(c, this.row)!= null){
                     return true;
                 }
             }

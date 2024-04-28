@@ -26,4 +26,17 @@ public class Bishop extends Piece{
         }
         return false;
     }
+    public boolean moveOverlapPiece(int col, int row){
+        int rowDirection = (row > this.row) ? 1 : -1;
+        int colDirection = (col > this.col) ? 1 : -1;
+
+        if(Math.abs(this.row - row) == Math.abs(this.col - col)){
+            for(int i = 1; i < Math.abs(this.col - col); ++i){
+                if(board.getPiece(this.col + i * colDirection, this.row + i * rowDirection) != null){
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
 }

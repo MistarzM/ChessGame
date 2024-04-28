@@ -26,4 +26,30 @@ public class Queen extends Piece{
         }
         return false;
     }
+
+    public boolean moveOverlapPiece(int col, int row){
+        int rowDirection = (row > this.row) ? 1 : -1;
+        int colDirection = (col > this.col) ? 1 : -1;
+
+        if(this.row == row){
+            for(int c = this.col + colDirection; c != col; c += colDirection){
+                if(board.getPiece(c, this.row) != null){
+                    return true;
+                }
+            }
+        } else if(this.col == col){
+            for(int r = this.row + rowDirection; r != row; r += rowDirection){
+                if(board.getPiece(this.col, r) != null){
+                    return true;
+                }
+            }
+        } else if(Math.abs(this.row - row) == Math.abs(this.col - col)){
+            for(int i = 1; i < Math.abs(this.col - col); ++i){
+                if(board.getPiece(this.col + i * colDirection, this.row + i * rowDirection) != null){
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
 }
