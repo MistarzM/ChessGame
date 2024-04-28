@@ -135,9 +135,13 @@ public class Board extends JPanel {
         if(currentPiece != null) {
             for (int r = 0; r < rows; r++) {
                 for (int c = 0; c < cols; c++) {
-                    if (isMoveLegal(new Move(this, currentPiece, c, r))) {
+                    if (isMoveLegal(new Move(this, currentPiece, c, r)) && getPiece(c, r) == null) {
                         graphics.setColor(new Color(70, 180, 60, 200));
                         graphics.fillOval(c * tileSize + 3 * (tileSize/8), r * tileSize + 3 * (tileSize/8), tileSize/4, tileSize/4);  // col * tileSize + tileSize/2 - tileSize/8 (cause width = tileSize/4)
+                    } else if(isMoveLegal(new Move(this, currentPiece, c, r)) && getPiece(c, r) != null){
+                        graphics.setColor(new Color(70, 180, 60, 200));
+                        graphics.setStroke(new BasicStroke(4));
+                        graphics.drawOval(c * tileSize, r * tileSize, tileSize, tileSize);
                     }
                 }
             }
