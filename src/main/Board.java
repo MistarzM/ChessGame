@@ -95,6 +95,11 @@ public class Board extends JPanel {
         move.piece.xPosition = move.newCol * tileSize;
         move.piece.yPosition = move.newRow * tileSize;
 
+        if (move.piece instanceof Pawn) {                   // if move executed by pawn, pawn.firstMove = false;
+            ((Pawn) move.piece).setFirstMove(false);
+        }
+
+
         capture(move);
     }
 
