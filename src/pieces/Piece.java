@@ -15,7 +15,7 @@ public class Piece {
     public int xPosition;
     public int yPosition;
 
-    public boolean colorOfTeam;
+    public boolean colorOfTeam;         // true -> white : false -> black
     public String pieceName;
     public int value;
 

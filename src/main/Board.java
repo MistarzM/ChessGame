@@ -25,7 +25,21 @@ public class Board extends JPanel {
     public Piece currentPiece;
     Event event = new Event(this);
 
+    // timer
+    private GameTimer gameTimer;
+    private JPanel panel;
+
+    public JPanel getPanel() {
+        return panel;
+    }
+
     public Board(){
+
+        gameTimer = new GameTimer();
+        panel = new JPanel(new BorderLayout());
+        panel.add(this, BorderLayout.CENTER);
+        panel.add(gameTimer.getTimerLabel(), BorderLayout.EAST);
+        gameTimer.start();
 
         this.setPreferredSize(new Dimension(cols * tileSize, rows * tileSize));
 

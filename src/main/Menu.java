@@ -22,7 +22,7 @@ public class Menu extends JFrame {
         startButton.addActionListener(e -> {
             this.getContentPane().removeAll();
             Board board = new Board();
-            this.add(board);
+            this.add(board.getPanel());
             this.revalidate();
             this.repaint();
         });
