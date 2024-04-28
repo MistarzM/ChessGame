@@ -44,6 +44,8 @@ public class Board extends JPanel {
 
         JPanel topPanel = new JPanel(new BorderLayout());
 
+        topPanel.setBackground(new Color(210, 180, 140));
+
         CustomButton backButton = new CustomButton("Back");
         backButton.setPreferredSize(new Dimension(Board.tileSize, Board.tileSize/2));
         backButton.setFont(new Font("Arial", Font.BOLD, Board.tileSize/5));
@@ -52,6 +54,8 @@ public class Board extends JPanel {
         });
 
         topPanel.add(backButton, BorderLayout.WEST);
+
+        topPanel.setBorder(BorderFactory.createEmptyBorder(10, 0, 10, 0));
 
         gameTimer = new GameTimer();
         topPanel.add(gameTimer.getTimerLabel(), BorderLayout.EAST);
