@@ -49,6 +49,10 @@ public class Piece {
         return images;
     }
 
+    public BufferedImage[] getSheets(){             // needed for promotion
+        return this.sheets;
+    }
+
     Image sprite;
 
     Board board;

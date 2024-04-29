@@ -4,8 +4,8 @@ import main.Board;
 
 import java.awt.image.BufferedImage;
 
-public class Rock extends Piece{
-    public Rock(Board board, boolean colorOfTeam, int col, int row){
+public class Rook extends Piece{
+    public Rook(Board board, boolean colorOfTeam, int col, int row){
         super(board);
 
         this.pieceName = "Rock";

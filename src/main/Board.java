@@ -1,7 +1,7 @@
 package main;
 
 import pieces.Pawn;
-import pieces.Rock;
+import pieces.Rook;
 import pieces.Knight;
 import pieces.Bishop;
 import pieces.Queen;
@@ -96,23 +96,23 @@ public class Board extends JPanel {
         piecesList.add(new Pawn(this, true, 6, 6));
         piecesList.add(new Pawn(this, true, 7, 6));
 
-        piecesList.add(new Rock(this, false, 0, 0));
+        piecesList.add(new Rook(this, false, 0, 0));
         piecesList.add(new Knight(this, false, 1, 0));
         piecesList.add(new Bishop(this, false, 2, 0));
         piecesList.add(new Queen(this, false, 3, 0));
         piecesList.add(new King(this, false, 4, 0));
         piecesList.add(new Bishop(this, false, 5, 0));
         piecesList.add(new Knight(this, false, 6, 0));
-        piecesList.add(new Rock(this, false, 7, 0));
+        piecesList.add(new Rook(this, false, 7, 0));
 
-        piecesList.add(new Rock(this, true, 0, 7));
+        piecesList.add(new Rook(this, true, 0, 7));
         piecesList.add(new Knight(this, true, 1, 7));
         piecesList.add(new Bishop(this, true, 2, 7));
         piecesList.add(new Queen(this, true, 3, 7));
         piecesList.add(new King(this, true, 4, 7));
         piecesList.add(new Bishop(this, true, 5, 7));
         piecesList.add(new Knight(this, true, 6, 7));
-        piecesList.add(new Rock(this, true, 7, 7));
+        piecesList.add(new Rook(this, true, 7, 7));
     }
 
     public Piece getPiece(int col, int row) {
@@ -126,8 +126,8 @@ public class Board extends JPanel {
         return null;
     }
 
-    public void capture(Move move){
-        piecesList.remove(move.capture);
+    public void capture(Piece piece){
+        piecesList.remove(piece);
     }
 
     public void performMove(Move move){
@@ -146,7 +146,7 @@ public class Board extends JPanel {
             }
 
 
-            capture(move);
+            capture(move.capture);
         }
     }
 
@@ -166,6 +166,10 @@ public class Board extends JPanel {
             enPassantTile = -1;
         }
 
+        if((move.piece.colorOfTeam && move.newRow == 0) || (!move.piece.colorOfTeam && move.newRow == 7)){
+            promotePawn(move);
+        }
+
         move.piece.col = move.newCol;
         move.piece.row = move.newRow;
 
@@ -177,7 +181,36 @@ public class Board extends JPanel {
         }
 
 
-        capture(move);
+        capture(move.capture);
+    }
+
+    public void promotePawn(Move move){
+        ImageIcon queenPromotion = new ImageIcon(move.piece.getSheets()[move.piece.colorOfTeam ? 4 : 10]);
+        ImageIcon rookPromotion = new ImageIcon(move.piece.getSheets()[move.piece.colorOfTeam ? 1 : 7]);
+        ImageIcon bishopPromotion = new ImageIcon(move.piece.getSheets()[move.piece.colorOfTeam ? 3 : 9]);
+        ImageIcon knightPromotion = new ImageIcon(move.piece.getSheets()[move.piece.colorOfTeam ? 2 : 8]);
+        Object[] optionToChoose = new Object[] {queenPromotion, rookPromotion, bishopPromotion, knightPromotion};
+        int chosenOption = JOptionPane.showOptionDialog(null, "Choose a piece for promotion", "Pawn Promotion",
+                JOptionPane.DEFAULT_OPTION, JOptionPane.PLAIN_MESSAGE,
+                null, optionToChoose, optionToChoose[0]);
+        switch(chosenOption){
+            case 0:
+                piecesList.add(new Queen(this, move.piece.colorOfTeam, move.newCol, move.newRow));
+                break;
+            case 1:
+                piecesList.add(new Rook(this, move.piece.colorOfTeam, move.newCol, move.newRow));
+                break;
+            case 2:
+                piecesList.add(new Bishop(this, move.piece.colorOfTeam, move.newCol, move.newRow));
+                break;
+            case 3:
+                piecesList.add(new Knight(this, move.piece.colorOfTeam, move.newCol, move.newRow));
+                break;
+            default:
+                piecesList.add(new Queen(this, move.piece.colorOfTeam, move.newCol, move.newRow));
+                break;
+        }
+        capture(move.piece);
     }
 
     public boolean isMoveLegal(Move move){
