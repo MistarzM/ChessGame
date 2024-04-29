@@ -42,6 +42,10 @@ public class Pawn extends Piece{
 
             if(col == this.col + 1 && row - this.row== -1 && board.getPiece(col, row) != null)      // capture right-top
                 return true;
+
+            if(board.getTileNumber(col, row) == board.enPassantTile && Math.abs(col - this.col) == 1 && row -this.row == -1 && board.getPiece(col, row + 1) != null){   //en passant
+                return true;
+            }
         }
         if(!this.colorOfTeam){    // piece is black
             if (this.col == col && row - this.row == 1 && board.getPiece(col, row) == null)
@@ -55,7 +59,13 @@ public class Pawn extends Piece{
 
             if(col == this.col + 1 && row - this.row == 1 && board.getPiece(col, row) != null)      // capture right-down
                 return true;
+
+            if(board.getTileNumber(col, row) == board.enPassantTile && Math.abs(col - this.col) == 1 && row -this.row == 1 && board.getPiece(col, row -1 ) != null){    //en passant
+                return true;
+            }
         }
+
+
 
         return false;
     }

@@ -29,6 +29,8 @@ public class Board extends JPanel {
 
     private Menu menu;
 
+    public int enPassantTile = -1;
+
     // timer
     private GameTimer gameTimer;
     private JPanel panel;
@@ -69,6 +71,10 @@ public class Board extends JPanel {
         this.addMouseMotionListener(event);
 
         addPieces();
+    }
+
+    public int getTileNumber(int col, int row){
+        return row * rows + col;
     }
 
     public void addPieces(){
@@ -125,6 +131,41 @@ public class Board extends JPanel {
     }
 
     public void performMove(Move move){
+
+        if(move.piece.pieceName.equals("Pawn")){
+            performPawnMove(move);
+        }else {
+            move.piece.col = move.newCol;
+            move.piece.row = move.newRow;
+
+            move.piece.xPosition = move.newCol * tileSize;
+            move.piece.yPosition = move.newRow * tileSize;
+
+            if (move.piece instanceof Pawn) {                   // if move executed by pawn, pawn.firstMove = false;
+                ((Pawn) move.piece).setFirstMove(false);
+            }
+
+
+            capture(move);
+        }
+    }
+
+    private void performPawnMove(Move move){
+
+        if(getTileNumber(move.newCol, move.newRow) == enPassantTile && move.piece.colorOfTeam){
+            move.capture = getPiece(move.newCol, move.newRow + 1);
+        }
+        if(getTileNumber(move.newCol, move.newRow) == enPassantTile && !move.piece.colorOfTeam){
+            move.capture = getPiece(move.newCol, move.newRow - 1);
+        }
+        if(Math.abs(move.piece.row - move.newRow) == 2 && move.piece.colorOfTeam){
+            enPassantTile = getTileNumber(move.newCol, move.newRow + 1);
+        } else if (Math.abs(move.piece.row - move.newRow) == 2 && !move.piece.colorOfTeam){
+            enPassantTile = getTileNumber(move.newCol, move.newRow - 1);
+        } else {
+            enPassantTile = -1;
+        }
+
         move.piece.col = move.newCol;
         move.piece.row = move.newRow;
 
