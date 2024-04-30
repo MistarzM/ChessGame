@@ -31,6 +31,8 @@ public class Board extends JPanel {
 
     public int enPassantTile = -1;
 
+    CheckDetector checkDetector = new CheckDetector(this);
+
     // timer
     private GameTimer gameTimer;
     private JPanel panel;
@@ -222,6 +224,9 @@ public class Board extends JPanel {
             return false;
         }
         if(move.piece.moveOverlapPiece(move.newCol, move.newRow)){
+            return false;
+        }
+        if(checkDetector.isKingCheck(move)){
             return false;
         }
 
