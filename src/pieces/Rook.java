@@ -8,7 +8,7 @@ public class Rook extends Piece{
     public Rook(Board board, boolean colorOfTeam, int col, int row){
         super(board);
 
-        this.pieceName = "Rock";
+        this.pieceName = "Rook";
 
         this.colorOfTeam = colorOfTeam;
 
