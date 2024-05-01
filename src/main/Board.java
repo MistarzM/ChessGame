@@ -13,6 +13,7 @@ import design.CustomButton;
 import javax.swing.*;
 import java.awt.*;
 import java.util.ArrayList;
+import java.util.stream.Collectors;
 
 public class Board extends JPanel {
 
@@ -23,7 +24,7 @@ public class Board extends JPanel {
     int rows = 8;
 
     private boolean whiteMove = true; // cause white -> start
-    private int winner = 0; // 0 - not winner yet, 1 - white win, -1 - black win
+    private boolean endGame = false;
 
     ArrayList<Piece> piecesList = new ArrayList<>();
 
@@ -230,7 +231,7 @@ public class Board extends JPanel {
 
     public boolean isMoveLegal(Move move){
 
-        if(winner != 0){
+        if(endGame){
             return false;
         }
 
@@ -271,9 +272,19 @@ public class Board extends JPanel {
             }else {
                 new Result("Stalemate");
             }
+            endGame = true;
+        } else if(notEnoughPieces(true) && notEnoughPieces(false)){
+            new Result("Insufficient Mating Material draw");
+            endGame = true;
         }
     }
-
+    private boolean notEnoughPieces(boolean colorOfTeam){
+        ArrayList<String> listOfPieces = piecesList.stream().filter(p->p.colorOfTeam == colorOfTeam).map(p->p.pieceName).collect(Collectors.toCollection(ArrayList::new));
+        if(listOfPieces.contains("Queen") || listOfPieces.contains("Rook") || listOfPieces.contains("Pawn")){
+            return false;
+        }
+        return listOfPieces.size() < 3;
+    }
 
     public void paintComponent(Graphics g){
         Graphics2D graphics = (Graphics2D) g;

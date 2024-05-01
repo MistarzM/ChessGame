@@ -8,9 +8,6 @@ public class Result extends JFrame {
 
     public Result(String result) {
         super("Game over");
-        this.setSize(300, 200);
-        this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-        setLocationRelativeTo(null);
 
         JPanel panel = new JPanel();
         panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
@@ -24,9 +21,16 @@ public class Result extends JFrame {
         panel.add(Box.createVerticalGlue());
         panel.add(resultLabel);
         panel.add(Box.createVerticalGlue());
-
         add(panel);
 
+        FontMetrics metrics = getFontMetrics(resultLabel.getFont());
+        int width = metrics.stringWidth(result);
+        int height = metrics.getHeight();
+
+        this.setSize(width + 100, height + 100);
+
+        this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        setLocationRelativeTo(null);
         setVisible(true);
     }
 }
