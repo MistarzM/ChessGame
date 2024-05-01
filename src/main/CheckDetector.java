@@ -40,7 +40,7 @@ public class CheckDetector {
                 ;
     }
 
-    private Piece getKing(boolean colorOfTeam){
+    public Piece getKing(boolean colorOfTeam){
         for(Piece p : board.piecesList){
             if(p.pieceName.equals("King") && p.colorOfTeam == colorOfTeam){
                 return p;
@@ -119,5 +119,25 @@ public class CheckDetector {
 
     private boolean checkPawn(Piece p, Piece k, int col ,int row){
         return p != null && !board.isSameTeam(p, k) && p.pieceName.equals("Pawn") && !(p.col == col && p.row == row);
+    }
+
+    public boolean gameOver(Piece k) {
+
+        for(Piece p  : board.piecesList){
+            if(board.isSameTeam(p, k)) {
+                board.currentPiece = p == k ? k : null;
+                for(int row = 0; row < board.rows; row++){
+                    for(int col = 0; col < board.cols; col++){
+                        Move move = new Move(board, p, col, row);
+                        if(board.isMoveLegal(move)){
+                            return false;
+                        }
+                    }
+                }
+            }
+        }
+
+
+        return true;
     }
 }

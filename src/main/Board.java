@@ -22,6 +22,9 @@ public class Board extends JPanel {
     int cols = 8;
     int rows = 8;
 
+    private boolean whiteMove = true; // cause white -> start
+    private int winner = 0; // 0 - not winner yet, 1 - white win, -1 - black win
+
     ArrayList<Piece> piecesList = new ArrayList<>();
 
     public Piece currentPiece;
@@ -151,6 +154,10 @@ public class Board extends JPanel {
 
 
         capture(move.capture);
+
+        whiteMove = !whiteMove;
+
+        updateGameStatus();
     }
 
     private void performPawnMove(Move move){
@@ -223,6 +230,14 @@ public class Board extends JPanel {
 
     public boolean isMoveLegal(Move move){
 
+        if(winner != 0){
+            return false;
+        }
+
+        if(move.piece.colorOfTeam != whiteMove ){
+            return false;
+        }
+
         if(isSameTeam(move.piece, move.capture)){
             return false;
         }
@@ -245,6 +260,19 @@ public class Board extends JPanel {
         }
 
         return true;
+    }
+
+    private void updateGameStatus(){
+        Piece king =  checkDetector.getKing(whiteMove);
+
+        if(checkDetector.gameOver(king)){
+            if(checkDetector.isKingCheck(new Move(this, king, king.col, king.row))) {
+                System.out.println(whiteMove ? "Black wins " : "white wins");
+            }else {
+                System.out.println("stat");
+
+            }
+        }
     }
 
 
