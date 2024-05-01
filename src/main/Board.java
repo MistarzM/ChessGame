@@ -267,10 +267,9 @@ public class Board extends JPanel {
 
         if(checkDetector.gameOver(king)){
             if(checkDetector.isKingCheck(new Move(this, king, king.col, king.row))) {
-                System.out.println(whiteMove ? "Black wins " : "white wins");
+                new Result(whiteMove ? "Black wins": "White wins");
             }else {
-                System.out.println("stat");
-
+                new Result("Stalemate");
             }
         }
     }
