@@ -5,6 +5,8 @@ import main.Board;
 import java.awt.image.BufferedImage;
 
 public class Rook extends Piece{
+
+    private boolean isFirstMove;        // for castling
     public Rook(Board board, boolean colorOfTeam, int col, int row){
         super(board);
 
@@ -17,7 +19,16 @@ public class Rook extends Piece{
         this.xPosition = col * Board.tileSize;
         this.yPosition = row * Board.tileSize;
 
+        this.isFirstMove = true;
+
         this.sprite = (colorOfTeam ? sheets[1] : sheets[7]).getScaledInstance(Board.tileSize, Board.tileSize, BufferedImage.SCALE_SMOOTH);
+    }
+
+    public boolean getFirstMove(){
+        return isFirstMove;
+    }
+    public void setFirstMove(boolean FirstMove){
+        this.isFirstMove = FirstMove;
     }
 
     public boolean isMovementLegal(int col, int row){

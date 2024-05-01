@@ -31,7 +31,7 @@ public class Board extends JPanel {
 
     public int enPassantTile = -1;
 
-    CheckDetector checkDetector = new CheckDetector(this);
+    public CheckDetector checkDetector = new CheckDetector(this);
 
     // timer
     private GameTimer gameTimer;
@@ -136,20 +136,21 @@ public class Board extends JPanel {
 
         if(move.piece.pieceName.equals("Pawn")){
             performPawnMove(move);
-        }else {
-            move.piece.col = move.newCol;
-            move.piece.row = move.newRow;
-
-            move.piece.xPosition = move.newCol * tileSize;
-            move.piece.yPosition = move.newRow * tileSize;
-
-            if (move.piece instanceof Pawn) {                   // if move executed by pawn, pawn.firstMove = false;
-                ((Pawn) move.piece).setFirstMove(false);
-            }
-
-
-            capture(move.capture);
+        }else if(move.piece.pieceName.equals("King")){
+            performKingMove((move));
         }
+        move.piece.col = move.newCol;
+        move.piece.row = move.newRow;
+
+        move.piece.xPosition = move.newCol * tileSize;
+        move.piece.yPosition = move.newRow * tileSize;
+
+        if (move.piece instanceof Pawn) {                   // if move executed by pawn, pawn.firstMove = false;
+            ((Pawn) move.piece).setFirstMove(false);
+        }
+
+
+        capture(move.capture);
     }
 
     private void performPawnMove(Move move){
@@ -171,19 +172,24 @@ public class Board extends JPanel {
         if((move.piece.colorOfTeam && move.newRow == 0) || (!move.piece.colorOfTeam && move.newRow == 7)){
             promotePawn(move);
         }
+    }
 
-        move.piece.col = move.newCol;
-        move.piece.row = move.newRow;
+    private void performKingMove(Move move){
 
-        move.piece.xPosition = move.newCol * tileSize;
-        move.piece.yPosition = move.newRow * tileSize;
-
-        if (move.piece instanceof Pawn) {                   // if move executed by pawn, pawn.firstMove = false;
-            ((Pawn) move.piece).setFirstMove(false);
+        if(Math.abs(move.piece.col - move.newCol) == 2){
+            Piece rook;
+            if(move.piece.col < move.newCol) {
+                rook = getPiece(7, move.piece.row);
+                rook.col = 5;
+            } else{
+                rook = getPiece(0, move.piece.row);
+                rook.col = 3;
+            }
+            rook.xPosition = rook.col * tileSize;
+            ((King) move.piece).setFirstMove(false);
+            ((Rook) rook).setFirstMove(false);
         }
 
-
-        capture(move.capture);
     }
 
     public void promotePawn(Move move){
