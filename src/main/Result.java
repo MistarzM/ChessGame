@@ -1,6 +1,7 @@
 package main;
 
 import javax.swing.*;
+import java.awt.*;
 
 public class Result extends JFrame {
     private JLabel resultLabel;
@@ -8,11 +9,23 @@ public class Result extends JFrame {
     public Result(String result) {
         super("Game over");
         this.setSize(300, 200);
-        this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         setLocationRelativeTo(null);
 
-        resultLabel = new JLabel(result, SwingConstants.CENTER);
-        add(resultLabel);
+        JPanel panel = new JPanel();
+        panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
+        panel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
+        panel.setBackground(Board.color1);
+
+        resultLabel = new JLabel(result);
+        resultLabel.setFont(new Font("Arial", Font.BOLD, 24)); // Custom font
+        resultLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
+
+        panel.add(Box.createVerticalGlue());
+        panel.add(resultLabel);
+        panel.add(Box.createVerticalGlue());
+
+        add(panel);
 
         setVisible(true);
     }
