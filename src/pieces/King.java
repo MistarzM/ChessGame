@@ -2,6 +2,7 @@ package pieces;
 
 import main.Board;
 import main.Move;
+import utils.LoadAndSave;
 
 import java.awt.image.BufferedImage;
 
@@ -23,7 +24,7 @@ public class King extends Piece{
 
         this.isFirstMove = true;
 
-        this.sprite = (colorOfTeam ? sheets[5] : sheets[11]).getScaledInstance(Board.tileSize, Board.tileSize, BufferedImage.SCALE_SMOOTH);
+        this.sprite = (colorOfTeam ? LoadAndSave.GetImg(LoadAndSave.WHITE_KING) : LoadAndSave.GetImg(LoadAndSave.BLACK_KING)).getScaledInstance(Board.tileSize, Board.tileSize, BufferedImage.SCALE_SMOOTH);
     }
 
     public void setFirstMove(boolean FirstMove){

@@ -1,6 +1,7 @@
 package pieces;
 
 import main.Board;
+import utils.LoadAndSave;
 
 import java.awt.image.BufferedImage;
 
@@ -22,7 +23,7 @@ public class Pawn extends Piece{
 
         this.isFirstMove = true;
 
-        this.sprite = (colorOfTeam ? sheets[0] : sheets[6]).getScaledInstance(Board.tileSize, Board.tileSize, BufferedImage.SCALE_SMOOTH);
+        this.sprite = (colorOfTeam ? LoadAndSave.GetImg(LoadAndSave.WHITE_PAWN) : LoadAndSave.GetImg(LoadAndSave.BLACK_PAWN)).getScaledInstance(Board.tileSize, Board.tileSize, BufferedImage.SCALE_SMOOTH);
     }
 
     public void setFirstMove(boolean firstMove){

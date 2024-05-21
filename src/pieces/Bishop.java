@@ -1,6 +1,7 @@
 package pieces;
 
 import main.Board;
+import utils.LoadAndSave;
 
 import java.awt.image.BufferedImage;
 
@@ -17,7 +18,7 @@ public class Bishop extends Piece{
         this.xPosition = col * Board.tileSize;
         this.yPosition = row * Board.tileSize;
 
-        this.sprite = (colorOfTeam ? sheets[3] : sheets[9]).getScaledInstance(Board.tileSize, Board.tileSize, BufferedImage.SCALE_SMOOTH);
+        this.sprite = (colorOfTeam ? LoadAndSave.GetImg(LoadAndSave.WHITE_BISHOP) : LoadAndSave.GetImg(LoadAndSave.BLACK_BISHOP)).getScaledInstance(Board.tileSize, Board.tileSize, BufferedImage.SCALE_SMOOTH);
     }
 
     public boolean isMovementLegal(int col, int row){

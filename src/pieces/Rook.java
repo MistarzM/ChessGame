@@ -1,6 +1,7 @@
 package pieces;
 
 import main.Board;
+import utils.LoadAndSave;
 
 import java.awt.image.BufferedImage;
 
@@ -21,7 +22,7 @@ public class Rook extends Piece{
 
         this.isFirstMove = true;
 
-        this.sprite = (colorOfTeam ? sheets[1] : sheets[7]).getScaledInstance(Board.tileSize, Board.tileSize, BufferedImage.SCALE_SMOOTH);
+        this.sprite = (colorOfTeam ? LoadAndSave.GetImg(LoadAndSave.WHITE_ROOK) : LoadAndSave.GetImg(LoadAndSave.BLACK_ROOK)).getScaledInstance(Board.tileSize, Board.tileSize, BufferedImage.SCALE_SMOOTH);
     }
 
     public boolean getFirstMove(){

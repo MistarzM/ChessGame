@@ -1,6 +1,7 @@
 package pieces;
 
 import main.Board;
+import utils.LoadAndSave;
 
 import java.awt.image.BufferedImage;
 
@@ -18,7 +19,7 @@ public class Knight extends Piece{
         this.xPosition = col * Board.tileSize;
         this.yPosition = row * Board.tileSize;
 
-        this.sprite = (colorOfTeam ? sheets[2] : sheets[8]).getScaledInstance(Board.tileSize, Board.tileSize, BufferedImage.SCALE_SMOOTH);
+        this.sprite = (colorOfTeam ? LoadAndSave.GetImg(LoadAndSave.WHITE_KNIGHT) : LoadAndSave.GetImg(LoadAndSave.BLACK_KNIGHT)).getScaledInstance(Board.tileSize, Board.tileSize, BufferedImage.SCALE_SMOOTH);
     }
 
     public boolean isMovementLegal(int col, int row){

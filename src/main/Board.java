@@ -9,6 +9,7 @@ import pieces.King;
 import pieces.Piece;
 
 import design.CustomButton;
+import utils.LoadAndSave;
 
 import javax.swing.*;
 import java.awt.*;
@@ -84,23 +85,10 @@ public class Board extends JPanel {
     }
 
     public void addPieces(){
-        piecesList.add(new Pawn(this, false, 0, 1));
-        piecesList.add(new Pawn(this, false, 1, 1));
-        piecesList.add(new Pawn(this, false, 2, 1));
-        piecesList.add(new Pawn(this, false, 3, 1));
-        piecesList.add(new Pawn(this, false, 4, 1));
-        piecesList.add(new Pawn(this, false, 5, 1));
-        piecesList.add(new Pawn(this, false, 6, 1));
-        piecesList.add(new Pawn(this, false, 7, 1));
-
-        piecesList.add(new Pawn(this, true, 0, 6));
-        piecesList.add(new Pawn(this, true, 1, 6));
-        piecesList.add(new Pawn(this, true, 2, 6));
-        piecesList.add(new Pawn(this, true, 3, 6));
-        piecesList.add(new Pawn(this, true, 4, 6));
-        piecesList.add(new Pawn(this, true, 5, 6));
-        piecesList.add(new Pawn(this, true, 6, 6));
-        piecesList.add(new Pawn(this, true, 7, 6));
+        for(int i = 0; i < 8; i++){
+            piecesList.add(new Pawn(this, false, i, 1));
+            piecesList.add(new Pawn(this, true, i, 6));
+        }
 
         piecesList.add(new Rook(this, false, 0, 0));
         piecesList.add(new Knight(this, false, 1, 0));
@@ -201,10 +189,10 @@ public class Board extends JPanel {
     }
 
     public void promotePawn(Move move){
-        ImageIcon queenPromotion = new ImageIcon(move.piece.getSheets()[move.piece.colorOfTeam ? 4 : 10]);
-        ImageIcon rookPromotion = new ImageIcon(move.piece.getSheets()[move.piece.colorOfTeam ? 1 : 7]);
-        ImageIcon bishopPromotion = new ImageIcon(move.piece.getSheets()[move.piece.colorOfTeam ? 3 : 9]);
-        ImageIcon knightPromotion = new ImageIcon(move.piece.getSheets()[move.piece.colorOfTeam ? 2 : 8]);
+        ImageIcon queenPromotion = new ImageIcon(move.piece.colorOfTeam ? LoadAndSave.GetImg(LoadAndSave.WHITE_QUEEN) : LoadAndSave.GetImg(LoadAndSave.BLACK_QUEEN));
+        ImageIcon rookPromotion = new ImageIcon(move.piece.colorOfTeam ? LoadAndSave.GetImg(LoadAndSave.WHITE_ROOK) : LoadAndSave.GetImg(LoadAndSave.BLACK_ROOK));
+        ImageIcon bishopPromotion = new ImageIcon(move.piece.colorOfTeam ? LoadAndSave.GetImg(LoadAndSave.WHITE_BISHOP) : LoadAndSave.GetImg(LoadAndSave.BLACK_BISHOP));
+        ImageIcon knightPromotion = new ImageIcon(move.piece.colorOfTeam ? LoadAndSave.GetImg(LoadAndSave.WHITE_KNIGHT) : LoadAndSave.GetImg(LoadAndSave.BLACK_KNIGHT));
         Object[] optionToChoose = new Object[] {queenPromotion, rookPromotion, bishopPromotion, knightPromotion};
         int chosenOption = JOptionPane.showOptionDialog(null, "Choose a piece for promotion", "Pawn Promotion",
                 JOptionPane.DEFAULT_OPTION, JOptionPane.PLAIN_MESSAGE,

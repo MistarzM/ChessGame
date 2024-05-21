@@ -1,6 +1,7 @@
 package pieces;
 
 import main.Board;
+import utils.LoadAndSave;
 
 import java.awt.image.BufferedImage;
 
@@ -17,7 +18,7 @@ public class Queen extends Piece{
         this.xPosition = col * Board.tileSize;
         this.yPosition = row * Board.tileSize;
 
-        this.sprite = (colorOfTeam ? sheets[4] : sheets[10]).getScaledInstance(Board.tileSize, Board.tileSize, BufferedImage.SCALE_SMOOTH);
+        this.sprite = (colorOfTeam ? LoadAndSave.GetImg(LoadAndSave.WHITE_QUEEN) : LoadAndSave.GetImg(LoadAndSave.BLACK_QUEEN)).getScaledInstance(Board.tileSize, Board.tileSize, BufferedImage.SCALE_SMOOTH);
     }
 
     public boolean isMovementLegal(int col, int row){
