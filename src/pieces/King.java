@@ -12,7 +12,7 @@ public class King extends Piece{
     private boolean isFirstMove;
 
     public King(Game game, boolean colorOfTeam, int col, int row){
-        super(game, "King", colorOfTeam, col, row, col * Board.TILE_SIZE, row * Board.TILE_SIZE);
+        super(game,  colorOfTeam, col, row, col * Board.TILE_SIZE, row * Board.TILE_SIZE);
 
         this.isFirstMove = true;
 

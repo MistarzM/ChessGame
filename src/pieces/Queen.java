@@ -8,7 +8,7 @@ import java.awt.image.BufferedImage;
 
 public class Queen extends Piece{
     public Queen(Game game, boolean colorOfTeam, int col, int row){
-        super(game, "Queen", colorOfTeam, col, row, col * Board.TILE_SIZE, row * Board.TILE_SIZE);
+        super(game,  colorOfTeam, col, row, col * Board.TILE_SIZE, row * Board.TILE_SIZE);
 
         this.sprite = (colorOfTeam ? LoadAndSave.GetImg(LoadAndSave.WHITE_QUEEN) : LoadAndSave.GetImg(LoadAndSave.BLACK_QUEEN)).getScaledInstance(Board.TILE_SIZE, Board.TILE_SIZE, BufferedImage.SCALE_SMOOTH);
     }

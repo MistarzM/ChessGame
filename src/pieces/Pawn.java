@@ -10,7 +10,7 @@ public class Pawn extends Piece{
     private boolean isFirstMove;
 
     public Pawn(Game game, boolean colorOfTeam, int col, int row){
-        super(game, "Pawn", colorOfTeam, col, row, col * Board.TILE_SIZE, row*Board.TILE_SIZE);
+        super(game,  colorOfTeam, col, row, col * Board.TILE_SIZE, row*Board.TILE_SIZE);
 
         this.isFirstMove = true;
 

@@ -14,14 +14,12 @@ public class Piece {
     public int yPosition;
 
     public boolean colorOfTeam;         // true -> white : false -> black
-    protected String pieceName;
     protected Image sprite;
 
     public Game game;
 
-    public Piece(Game game, String pieceName, boolean colorOfTeam, int col, int row, int xPosition, int yPosition) {
+    public Piece(Game game, boolean colorOfTeam, int col, int row, int xPosition, int yPosition) {
         this.game = game;
-        this.pieceName =  pieceName;
         this.colorOfTeam = colorOfTeam;
         this.col = col;
         this.row = row;
@@ -43,7 +41,4 @@ public class Piece {
         return false;
     }
 
-    public String getPieceName(){
-        return pieceName;
-    }
 }

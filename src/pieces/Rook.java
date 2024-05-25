@@ -10,7 +10,7 @@ public class Rook extends Piece{
 
     private boolean isFirstMove;        // for castling
     public Rook(Game game, boolean colorOfTeam, int col, int row){
-        super(game, "Rook", colorOfTeam, col, row, col * Board.TILE_SIZE, row*Board.TILE_SIZE);
+        super(game,  colorOfTeam, col, row, col * Board.TILE_SIZE, row*Board.TILE_SIZE);
 
 
         this.isFirstMove = true;

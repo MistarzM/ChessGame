@@ -72,9 +72,9 @@ public class Game {
 
     public void performMove(Move move){
 
-        if(move.piece.getPieceName().equals("Pawn")){
+        if(move.piece instanceof Pawn){
             performPawnMove(move);
-        }else if(move.piece.getPieceName().equals("King")){
+        }else if(move.piece instanceof King){
             performKingMove((move));
         }
         move.piece.col = move.newCol;
@@ -204,18 +204,17 @@ public class Game {
 
     private boolean notEnoughPieces(boolean colorOfTeam){
         int count = 0;
-        boolean hasMajorPieces = false;
+        boolean importantPieces = false;
 
         for(Piece p : piecesList){
             if(p.colorOfTeam == colorOfTeam){
                 count++;
-                String pieceName = p.getPieceName();
-                if(pieceName.equals("Queen") || pieceName.equals("Rook") || pieceName.equals("Pawn")){
-                    hasMajorPieces = true;
+                if(p instanceof Queen || p instanceof  Rook || p instanceof  Pawn){
+                    importantPieces = true;
                 }
             }
         }
 
-        return !hasMajorPieces && count < 3;
+        return !importantPieces && count < 3;
     }
 }

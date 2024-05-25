@@ -17,13 +17,13 @@ import java.awt.Color;
 
 public class Settings extends JPanel {
 
-    private Menu menu;
-    private Dimension initialSize;
-    private int initialTileSize;
-    private Color initialColor1;
-    private Color initialColor2;
-    private CustomButton saveButton;
-    private CustomButton backButton;
+    private final Menu menu;
+    private final Dimension initialSize;
+    private final int initialTileSize;
+    private final Color initialColor1;
+    private final Color initialColor2;
+    private final CustomButton saveButton;
+    private final CustomButton backButton;
 
     public Settings(Menu menu) {
         this.menu = menu;

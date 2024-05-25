@@ -8,8 +8,8 @@ import java.awt.Color;
 
 public class GameTimer {
 
-    private JLabel timerLabel;
-    private Timer timer;
+    private final JLabel timerLabel;
+    private final Timer timer;
     private int timeInSeconds;
     private int timeInMinutes;
 

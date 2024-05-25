@@ -1,144 +1,147 @@
 package main;
 
-import pieces.Piece;
+import pieces.*;
 import utils.Constants;
 
 public class CheckDetector {
-    private Game game ;
+    private Game game;
 
     public CheckDetector(Game game) {
         this.game = game;
     }
 
-    public boolean isKingCheck(Move move){
+    public boolean isKingCheck(Move move) {
         Piece king = getKing(move.piece.colorOfTeam);
 
-        if(king == null){
+        if (king == null) {
             throw new IllegalStateException("King not found");
         }
 
         int kingCol = king.col;
         int kingRow = king.row;
 
-        if(game.currentPiece != null && game.currentPiece.getPieceName().equals("King")){
+        if (game.currentPiece != null && game.currentPiece instanceof King) {
             kingCol = move.newCol;
             kingRow = move.newRow;
         }
 
-        return  isKingCheckedByRook(move.newCol, move.newRow, king, kingCol, kingRow, 0, 1) ||    // up
-                isKingCheckedByRook(move.newCol, move.newRow, king, kingCol, kingRow , 1, 0) ||   //  right
-                isKingCheckedByRook(move.newCol, move.newRow, king, kingCol, kingRow,0 , -1) ||   //down
-                isKingCheckedByRook(move.newCol, move.newRow, king, kingCol, kingRow, -1, 0) ||   // left
-
-                isKingCheckedByBishop(move.newCol, move.newRow, king, kingCol, kingRow, -1, -1) ||    // up left
-                isKingCheckedByBishop(move.newCol, move.newRow, king, kingCol, kingRow, 1, -1) ||     // up right
-                isKingCheckedByBishop(move.newCol, move.newRow, king, kingCol, kingRow, 1, 1) ||      // down right
-                isKingCheckedByBishop(move.newCol, move.newRow, king, kingCol, kingRow, -1, 1) ||     //down left
-
-                isKingCheckedByKnight(move.newCol, move.newRow, king, kingCol, kingRow) ||
-                isKingCheckedByPawn(move.newCol, move.newRow, king, kingCol, kingRow) ||
-                isKngCheckedByKing(king, kingCol, kingRow)
-                ;
+        return isKingCheckedByRook(move, king, kingCol, kingRow) ||
+                isKingCheckedByBishop(move, king, kingCol, kingRow) ||
+                isKingCheckedByKnight(move, king, kingCol, kingRow) ||
+                isKingCheckedByPawn(move, king, kingCol, kingRow) ||
+                isKingCheckedByKing(king, kingCol, kingRow);
     }
 
-    public Piece getKing(boolean colorOfTeam){
-        for(Piece p : game.piecesList){
-            if(p.getPieceName().equals("King") && p.colorOfTeam == colorOfTeam){
+    private boolean isKingCheckedByRook(Move move, Piece king, int kingCol, int kingRow) {
+        return isKingCheckedByRookOrQueen(move, king, kingCol, kingRow, Direction.NORTH) ||  // up
+                isKingCheckedByRookOrQueen(move, king, kingCol, kingRow, Direction.EAST) ||  // right
+                isKingCheckedByRookOrQueen(move, king, kingCol, kingRow, Direction.SOUTH) || // down
+                isKingCheckedByRookOrQueen(move, king, kingCol, kingRow, Direction.WEST);   // left
+    }
+
+    private boolean isKingCheckedByBishop(Move move, Piece king, int kingCol, int kingRow) {
+        return isKingCheckedByBishopOrQueen(move, king, kingCol, kingRow, Direction.NORTH_EAST) || // up right
+                isKingCheckedByBishopOrQueen(move, king, kingCol, kingRow, Direction.SOUTH_EAST) ||  // down right
+                isKingCheckedByBishopOrQueen(move, king, kingCol, kingRow, Direction.SOUTH_WEST) ||   // down left
+                isKingCheckedByBishopOrQueen(move, king, kingCol, kingRow, Direction.NORTH_WEST);    // up left
+    }
+
+    private boolean isKingCheckedByRookOrQueen(Move move, Piece king, int kingCol, int kingRow, Direction direction) {
+        for (int i = 1; i < 8; i++) {
+            if (kingCol + (i * direction.colValue) == move.newCol && kingRow + (i * direction.rowValue) == move.newRow) {
+                break;
+            }
+            Piece piece = game.getPiece(kingCol + (i * direction.colValue), kingRow + (i * direction.rowValue));
+            if (piece != null && piece != game.currentPiece) {
+                if (!game.isSameTeam(piece, king) && (piece instanceof Rook || piece instanceof Queen)) {
+                    return true;
+                }
+                break;
+            }
+        }
+        return false;
+    }
+
+    private boolean isKingCheckedByBishopOrQueen(Move move, Piece king, int kingCol, int kingRow, Direction direction) {
+        for (int i = 1; i < 8; i++) {
+            if (kingCol + (i * direction.colValue) == move.newCol && kingRow + (i * direction.rowValue) == move.newRow) {
+                break;
+            }
+            Piece piece = game.getPiece(kingCol + (i * direction.colValue), kingRow + (i * direction.rowValue));
+            if (piece != null && piece != game.currentPiece) {
+                if (!game.isSameTeam(piece, king) && (piece instanceof Bishop || piece instanceof Queen)) {
+                    return true;
+                }
+                break;
+            }
+        }
+        return false;
+    }
+
+    private boolean isKingCheckedByKnight(Move move, Piece king, int kingCol, int kingRow) {
+        return checkKnight(game.getPiece(kingCol - 1, kingRow - 2), king, move.newCol, move.newRow) ||
+                checkKnight(game.getPiece(kingCol + 1, kingRow - 2), king, move.newCol, move.newRow) ||
+                checkKnight(game.getPiece(kingCol + 2, kingRow - 1), king, move.newCol, move.newRow) ||
+                checkKnight(game.getPiece(kingCol + 2, kingRow + 1), king, move.newCol, move.newRow) ||
+                checkKnight(game.getPiece(kingCol + 1, kingRow + 2), king, move.newCol, move.newRow) ||
+                checkKnight(game.getPiece(kingCol - 1, kingRow + 2), king, move.newCol, move.newRow) ||
+                checkKnight(game.getPiece(kingCol - 2, kingRow + 1), king, move.newCol, move.newRow) ||
+                checkKnight(game.getPiece(kingCol - 2, kingRow - 1), king, move.newCol, move.newRow);
+    }
+
+    private boolean isKingCheckedByPawn(Move move, Piece king, int kingCol, int kingRow) {
+        int colorVal = king.colorOfTeam ? -1 : 1;
+        return checkPawn(game.getPiece(kingCol + 1, kingRow + colorVal), king, move.newCol, move.newRow) ||
+                checkPawn(game.getPiece(kingCol - 1, kingRow + colorVal), king, move.newCol, move.newRow);
+    }
+
+    private boolean isKingCheckedByKing(Piece king, int kingCol, int kingRow) {
+        return checkKing(game.getPiece(kingCol - 1, kingRow - 1), king) ||
+                checkKing(game.getPiece(kingCol + 1, kingRow - 1), king) ||
+                checkKing(game.getPiece(kingCol, kingRow - 1), king) ||
+                checkKing(game.getPiece(kingCol - 1, kingRow), king) ||
+                checkKing(game.getPiece(kingCol + 1, kingRow), king) ||
+                checkKing(game.getPiece(kingCol - 1, kingRow + 1), king) ||
+                checkKing(game.getPiece(kingCol + 1, kingRow + 1), king) ||
+                checkKing(game.getPiece(kingCol, kingRow + 1), king);
+    }
+
+    public Piece getKing(boolean colorOfTeam) {
+        for (Piece p : game.piecesList) {
+            if (p instanceof King && p.colorOfTeam == colorOfTeam) {
                 return p;
             }
         }
         return null;
     }
 
-    private boolean isKingCheckedByRook(int col, int row, Piece king, int kingCol, int kingRow, int colValue, int rowValue){
-        for(int i = 1; i < 8; i++){
-            if(kingCol + (i * colValue) == col && kingRow + (i * rowValue) == row){
-                break;
-            }
-            Piece piece = game.getPiece(kingCol + (i* colValue), kingRow + (i * rowValue));
-            if(piece  != null && piece != game.currentPiece) {
-                if(!game.isSameTeam(piece, king) && (piece.getPieceName().equals("Rook") || piece.getPieceName().equals("Queen"))){
-                    return true;
-                }
-                break;
-            }
-        }
-        return false;
+    private boolean checkKnight(Piece p, Piece king, int col, int row) {
+        return p != null && !game.isSameTeam(p, king) && p instanceof Knight && !(p.col == col && p.row == row);
     }
 
-    private boolean isKingCheckedByBishop(int col, int row, Piece king, int kingCol, int kingRow, int colValue, int rowValue){
-        for(int i = 1; i < 8; i++){
-            if(kingCol - (i * colValue) == col && kingRow - (i * rowValue) == row){
-                break;
-            }
-            Piece piece = game.getPiece(kingCol - (i* colValue), kingRow - (i * rowValue));
-            if(piece  != null && piece != game.currentPiece) {
-                if(!game.isSameTeam(piece, king) && (piece.getPieceName().equals("Bishop") || piece.getPieceName().equals("Queen"))){
-                    return true;
-                }
-                break;
-            }
-        }
-        return false;
+    private boolean checkPawn(Piece p, Piece king, int col, int row) {
+        return p != null && !game.isSameTeam(p, king) && p instanceof Pawn && !(p.col == col && p.row == row);
     }
 
-    private boolean isKingCheckedByKnight(int col, int row, Piece king, int kingCol, int kingRow){
-        return checkKnight(game.getPiece(kingCol - 1, kingRow - 2), king , col, row) ||
-                checkKnight(game.getPiece(kingCol + 1, kingRow - 2), king , col, row) ||
-                checkKnight(game.getPiece(kingCol + 2, kingRow - 1), king , col, row) ||
-                checkKnight(game.getPiece(kingCol + 2, kingRow + 1), king , col, row) ||
-                checkKnight(game.getPiece(kingCol + 1, kingRow + 2), king , col, row) ||
-                checkKnight(game.getPiece(kingCol - 1, kingRow + 2), king , col, row) ||
-                checkKnight(game.getPiece(kingCol - 2, kingRow + 1), king , col, row) ||
-                checkKnight(game.getPiece(kingCol - 2, kingRow - 1), king , col, row);
+    private boolean checkKing(Piece p, Piece king) {
+        return p != null && !game.isSameTeam(p, king) && p instanceof King;
     }
 
-    private boolean checkKnight(Piece p, Piece k, int col, int row){
-        return p != null && !game.isSameTeam(p, k) && p.getPieceName().equals("Knight") && !(p.col == col && p.row == row);
-    }
-
-    private boolean isKngCheckedByKing(Piece k, int kingCol, int kingRow){
-        return checkKing(game.getPiece(kingCol - 1, kingRow - 1), k) ||
-                 checkKing(game.getPiece(kingCol + 1, kingRow - 1), k) ||
-                 checkKing(game.getPiece(kingCol, kingRow - 1), k) ||
-                 checkKing(game.getPiece(kingCol - 1, kingRow), k) ||
-                 checkKing(game.getPiece(kingCol + 1, kingRow), k) ||
-                 checkKing(game.getPiece(kingCol - 1, kingRow + 1), k) ||
-                 checkKing(game.getPiece(kingCol + 1, kingRow + 1), k) ||
-                 checkKing(game.getPiece(kingCol, kingRow + 1), k);
-    }
-
-    private boolean checkKing(Piece p, Piece k){
-        return p != null && !game.isSameTeam(p, k) && p.getPieceName().equals("King");
-    }
-
-    private boolean isKingCheckedByPawn(int col, int row, Piece k, int kingCol, int kingRow){
-        int colorVal = k.colorOfTeam ? -1 : 1;
-        return checkPawn(game.getPiece(kingCol + 1, kingRow + colorVal), k, col, row) ||
-                checkPawn(game.getPiece(kingCol - 1, kingRow + colorVal), k, col, row) ;
-    }
-
-    private boolean checkPawn(Piece p, Piece k, int col ,int row){
-        return p != null && !game.isSameTeam(p, k) && p.getPieceName().equals("Pawn") && !(p.col == col && p.row == row);
-    }
-
-    public boolean gameOver(Piece k) {
-
-        for(Piece p  : game.piecesList){
-            if(game.isSameTeam(p, k)) {
-                game.currentPiece = p == k ? k : null;
-                for(int row = 0; row < Constants.ROWS; row++){
-                    for(int col = 0; col < Constants.COLS; col++){
+    public boolean gameOver(Piece king) {
+        for (Piece p : game.piecesList) {
+            if (game.isSameTeam(p, king)) {
+                game.currentPiece = p == king ? king : null;
+                for (int row = 0; row < Constants.ROWS; row++) {
+                    for (int col = 0; col < Constants.COLS; col++) {
                         Move move = new Move(game, p, col, row);
-                        if(game.isMoveLegal(move)){
+                        if (game.isMoveLegal(move)) {
                             return false;
                         }
                     }
                 }
             }
         }
-
-
         return true;
     }
 }
+
