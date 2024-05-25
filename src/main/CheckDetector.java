@@ -1,6 +1,7 @@
 package main;
 
 import pieces.Piece;
+import utils.Constants;
 
 public class CheckDetector {
     private Board board;
@@ -126,8 +127,8 @@ public class CheckDetector {
         for(Piece p  : board.piecesList){
             if(board.isSameTeam(p, k)) {
                 board.currentPiece = p == k ? k : null;
-                for(int row = 0; row < board.rows; row++){
-                    for(int col = 0; col < board.cols; col++){
+                for(int row = 0; row < Constants.ROWS; row++){
+                    for(int col = 0; col < Constants.COLS; col++){
                         Move move = new Move(board, p, col, row);
                         if(board.isMoveLegal(move)){
                             return false;

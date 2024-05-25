@@ -9,6 +9,7 @@ import pieces.King;
 import pieces.Piece;
 
 import design.CustomButton;
+import utils.Constants;
 import utils.LoadAndSave;
 
 import javax.swing.*;
@@ -21,8 +22,6 @@ public class Board extends JPanel {
     public static int tileSize = 80;
     public static Color color1 = new Color(230,190,110);
     public static Color color2 = new Color(180,140,70);
-    int cols = 8;
-    int rows = 8;
 
     private boolean whiteMove = true; // cause white -> start
     private boolean endGame = false;
@@ -72,7 +71,7 @@ public class Board extends JPanel {
         panel.add(this, BorderLayout.CENTER);
         gameTimer.start();
 
-        this.setPreferredSize(new Dimension(cols * tileSize, rows * tileSize));
+        this.setPreferredSize(new Dimension(Constants.COLS * tileSize, Constants.ROWS * tileSize));
 
         this.addMouseListener(event);
         this.addMouseMotionListener(event);
@@ -81,7 +80,7 @@ public class Board extends JPanel {
     }
 
     public int getTileNumber(int col, int row){
-        return row * rows + col;
+        return row * Constants.ROWS + col;
     }
 
     public void addPieces(){
@@ -198,9 +197,6 @@ public class Board extends JPanel {
                 JOptionPane.DEFAULT_OPTION, JOptionPane.PLAIN_MESSAGE,
                 null, optionToChoose, optionToChoose[0]);
         switch(chosenOption){
-            case 0:
-                piecesList.add(new Queen(this, move.piece.colorOfTeam, move.newCol, move.newRow));
-                break;
             case 1:
                 piecesList.add(new Rook(this, move.piece.colorOfTeam, move.newCol, move.newRow));
                 break;
@@ -210,6 +206,7 @@ public class Board extends JPanel {
             case 3:
                 piecesList.add(new Knight(this, move.piece.colorOfTeam, move.newCol, move.newRow));
                 break;
+            case 0:
             default:
                 piecesList.add(new Queen(this, move.piece.colorOfTeam, move.newCol, move.newRow));
                 break;
@@ -277,16 +274,16 @@ public class Board extends JPanel {
     public void paintComponent(Graphics g){
         Graphics2D graphics = (Graphics2D) g;
 
-        for(int row = 0; row < rows; row++){
-            for(int col = 0; col < cols; col++){
+        for(int row = 0; row < Constants.ROWS; row++){
+            for(int col = 0; col < Constants.COLS; col++){
                 graphics.setColor((col + row) % 2 == 0 ? color1 : color2);
                 graphics.fillRect(col * tileSize, row * tileSize, tileSize, tileSize);
             }
         }
 
         if(currentPiece != null) {
-            for (int r = 0; r < rows; r++) {
-                for (int c = 0; c < cols; c++) {
+            for (int r = 0; r < Constants.ROWS; r++) {
+                for (int c = 0; c < Constants.COLS; c++) {
                     if (isMoveLegal(new Move(this, currentPiece, c, r)) && getPiece(c, r) == null) {
                         graphics.setColor(new Color(70, 180, 60, 200));
                         graphics.fillOval(c * tileSize + 3 * (tileSize/8), r * tileSize + 3 * (tileSize/8), tileSize/4, tileSize/4);  // col * tileSize + tileSize/2 - tileSize/8 (cause width = tileSize/4)

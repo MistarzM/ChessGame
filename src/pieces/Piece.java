@@ -23,8 +23,15 @@ public class Piece {
 
     Board board;
 
-    public Piece(Board board) {
+    public Piece(Board board, String pieceName, boolean colorOfTeam, int col, int row, int xPosition, int yPosition) {
         this.board = board;
+        this.pieceName =  pieceName;
+        this.colorOfTeam = colorOfTeam;
+        this.col = col;
+        this.row = row;
+        this.xPosition = xPosition;
+        this.yPosition = yPosition;
+
     }
 
     public void paint(Graphics2D graphics2D) {

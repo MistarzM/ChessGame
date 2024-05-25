@@ -10,16 +10,7 @@ public class Pawn extends Piece{
     private boolean isFirstMove;
 
     public Pawn(Board board, boolean colorOfTeam, int col, int row){
-        super(board);
-
-        this.pieceName = "Pawn";
-
-        this.colorOfTeam = colorOfTeam;
-
-        this.col = col;
-        this.row = row;
-        this.xPosition = col * Board.tileSize;
-        this.yPosition = row * Board.tileSize;
+        super(board, "Pawn", colorOfTeam, col, row, col * Board.tileSize, row*Board.tileSize);
 
         this.isFirstMove = true;
 

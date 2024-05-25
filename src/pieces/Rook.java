@@ -9,16 +9,8 @@ public class Rook extends Piece{
 
     private boolean isFirstMove;        // for castling
     public Rook(Board board, boolean colorOfTeam, int col, int row){
-        super(board);
+        super(board, "Rook", colorOfTeam, col, row, col * Board.tileSize, row*Board.tileSize);
 
-        this.pieceName = "Rook";
-
-        this.colorOfTeam = colorOfTeam;
-
-        this.col = col;
-        this.row = row;
-        this.xPosition = col * Board.tileSize;
-        this.yPosition = row * Board.tileSize;
 
         this.isFirstMove = true;
 

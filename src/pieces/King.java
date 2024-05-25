@@ -11,16 +11,7 @@ public class King extends Piece{
     private boolean isFirstMove;
 
     public King(Board board, boolean colorOfTeam, int col, int row){
-        super(board);
-
-        this.pieceName = "King";
-
-        this.colorOfTeam = colorOfTeam;
-
-        this.col = col;
-        this.row = row;
-        this.xPosition = col * Board.tileSize;
-        this.yPosition = row * Board.tileSize;
+        super(board, "King", colorOfTeam, col, row, col * Board.tileSize, row * Board.tileSize);
 
         this.isFirstMove = true;
 

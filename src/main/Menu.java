@@ -7,8 +7,8 @@ import design.CustomButton;
 
 public class Menu extends JFrame {
 
-    private CustomButton startButton;
-    private CustomButton settingsButton;
+    private final CustomButton startButton;
+    private final CustomButton settingsButton;
 
     public Menu(){
         this.getContentPane().setBackground(new Color(210, 180, 140));
