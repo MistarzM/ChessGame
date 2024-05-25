@@ -17,8 +17,8 @@ public class Event extends MouseAdapter {
 
     @Override
     public void mousePressed(MouseEvent e){
-        int col = e.getX() / Board.tileSize;
-        int row = e.getY() / Board.tileSize;
+        int col = e.getX() / Board.TILE_SIZE;
+        int row = e.getY() / Board.TILE_SIZE;
 
         Piece piecePosition = board.getPiece(col, row);
 
@@ -30,8 +30,8 @@ public class Event extends MouseAdapter {
     @Override
     public void mouseDragged(MouseEvent e){
          if(board.currentPiece != null){
-             board.currentPiece.xPosition = e.getX() - Board.tileSize / 2;
-             board.currentPiece.yPosition = e.getY() - Board.tileSize / 2;
+             board.currentPiece.xPosition = e.getX() - Board.TILE_SIZE / 2;
+             board.currentPiece.yPosition = e.getY() - Board.TILE_SIZE/ 2;
 
              board.repaint();
          }
@@ -40,8 +40,8 @@ public class Event extends MouseAdapter {
     @Override
     public void mouseReleased(MouseEvent e){
 
-        int col = e.getX() / Board.tileSize;
-        int row = e.getY() / Board.tileSize;
+        int col = e.getX() / Board.TILE_SIZE;
+        int row = e.getY() / Board.TILE_SIZE;
 
         if(board.currentPiece != null){
             Move move = new Move(board, board.currentPiece, col, row);
@@ -49,8 +49,8 @@ public class Event extends MouseAdapter {
             if(board.isMoveLegal(move)){
                 board.performMove(move);
             } else {
-                board.currentPiece.xPosition = board.currentPiece.col * Board.tileSize;
-                board.currentPiece.yPosition = board.currentPiece.row * Board.tileSize;
+                board.currentPiece.xPosition = board.currentPiece.col * Board.TILE_SIZE;
+                board.currentPiece.yPosition = board.currentPiece.row * Board.TILE_SIZE;
             }
         }
 

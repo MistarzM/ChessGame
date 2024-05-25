@@ -14,7 +14,7 @@ public class GameTimer {
         timerLabel = new JLabel();
         timerLabel.setHorizontalAlignment(JLabel.RIGHT);
         timerLabel.setVerticalAlignment(JLabel.TOP);
-        timerLabel.setFont(new Font("Arial", Font.BOLD,  Board.tileSize/4));
+        timerLabel.setFont(new Font("Arial", Font.BOLD,  Board.TILE_SIZE/4));
         timerLabel.setBackground(new Color(210, 180, 140));
         timerLabel.setOpaque(true);
         timeInSeconds = 0;

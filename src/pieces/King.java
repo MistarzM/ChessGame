@@ -11,11 +11,11 @@ public class King extends Piece{
     private boolean isFirstMove;
 
     public King(Board board, boolean colorOfTeam, int col, int row){
-        super(board, "King", colorOfTeam, col, row, col * Board.tileSize, row * Board.tileSize);
+        super(board, "King", colorOfTeam, col, row, col * Board.TILE_SIZE, row * Board.TILE_SIZE);
 
         this.isFirstMove = true;
 
-        this.sprite = (colorOfTeam ? LoadAndSave.GetImg(LoadAndSave.WHITE_KING) : LoadAndSave.GetImg(LoadAndSave.BLACK_KING)).getScaledInstance(Board.tileSize, Board.tileSize, BufferedImage.SCALE_SMOOTH);
+        this.sprite = (colorOfTeam ? LoadAndSave.GetImg(LoadAndSave.WHITE_KING) : LoadAndSave.GetImg(LoadAndSave.BLACK_KING)).getScaledInstance(Board.TILE_SIZE, Board.TILE_SIZE, BufferedImage.SCALE_SMOOTH);
     }
 
     public void setFirstMove(boolean FirstMove){

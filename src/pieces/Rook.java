@@ -9,12 +9,12 @@ public class Rook extends Piece{
 
     private boolean isFirstMove;        // for castling
     public Rook(Board board, boolean colorOfTeam, int col, int row){
-        super(board, "Rook", colorOfTeam, col, row, col * Board.tileSize, row*Board.tileSize);
+        super(board, "Rook", colorOfTeam, col, row, col * Board.TILE_SIZE, row*Board.TILE_SIZE);
 
 
         this.isFirstMove = true;
 
-        this.sprite = (colorOfTeam ? LoadAndSave.GetImg(LoadAndSave.WHITE_ROOK) : LoadAndSave.GetImg(LoadAndSave.BLACK_ROOK)).getScaledInstance(Board.tileSize, Board.tileSize, BufferedImage.SCALE_SMOOTH);
+        this.sprite = (colorOfTeam ? LoadAndSave.GetImg(LoadAndSave.WHITE_ROOK) : LoadAndSave.GetImg(LoadAndSave.BLACK_ROOK)).getScaledInstance(Board.TILE_SIZE, Board.TILE_SIZE, BufferedImage.SCALE_SMOOTH);
     }
 
     public boolean getFirstMove(){

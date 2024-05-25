@@ -7,9 +7,9 @@ import java.awt.image.BufferedImage;
 
 public class Bishop extends Piece{
     public Bishop(Board board, boolean colorOfTeam, int col, int row){
-        super(board, "Bishop", colorOfTeam, col, row, col * Board.tileSize, row * Board.tileSize);
+        super(board, "Bishop", colorOfTeam, col, row, col * Board.TILE_SIZE, row * Board.TILE_SIZE);
 
-        this.sprite = (colorOfTeam ? LoadAndSave.GetImg(LoadAndSave.WHITE_BISHOP) : LoadAndSave.GetImg(LoadAndSave.BLACK_BISHOP)).getScaledInstance(Board.tileSize, Board.tileSize, BufferedImage.SCALE_SMOOTH);
+        this.sprite = (colorOfTeam ? LoadAndSave.GetImg(LoadAndSave.WHITE_BISHOP) : LoadAndSave.GetImg(LoadAndSave.BLACK_BISHOP)).getScaledInstance(Board.TILE_SIZE, Board.TILE_SIZE, BufferedImage.SCALE_SMOOTH);
     }
 
     public boolean isMovementLegal(int col, int row){

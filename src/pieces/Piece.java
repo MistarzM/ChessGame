@@ -2,10 +2,7 @@ package pieces;
 
 import main.Board;
 
-import javax.imageio.ImageIO;
 import java.awt.*;
-import java.awt.image.BufferedImage;
-import java.io.IOException;
 
 public class Piece {
 
@@ -34,9 +31,9 @@ public class Piece {
 
     }
 
-    public void paint(Graphics2D graphics2D) {
+    public void paint(Graphics2D g) {
 
-        graphics2D.drawImage(sprite, xPosition, yPosition, null);
+        g.drawImage(sprite, xPosition, yPosition, null);
     }
 
     //movement

@@ -19,7 +19,7 @@ import java.util.stream.Collectors;
 
 public class Board extends JPanel {
 
-    public static int tileSize = 80;
+    public static int TILE_SIZE = 80;
     public static Color color1 = new Color(230,190,110);
     public static Color color2 = new Color(180,140,70);
 
@@ -55,8 +55,8 @@ public class Board extends JPanel {
         topPanel.setBackground(new Color(210, 180, 140));
 
         CustomButton backButton = new CustomButton("Back");
-        backButton.setPreferredSize(new Dimension(Board.tileSize, Board.tileSize/2));
-        backButton.setFont(new Font("Arial", Font.BOLD, Board.tileSize/5));
+        backButton.setPreferredSize(new Dimension(Board.TILE_SIZE, Board.TILE_SIZE/2));
+        backButton.setFont(new Font("Arial", Font.BOLD, Board.TILE_SIZE/5));
         backButton.addActionListener(e -> {
             menu.showMenu();
         });
@@ -71,7 +71,7 @@ public class Board extends JPanel {
         panel.add(this, BorderLayout.CENTER);
         gameTimer.start();
 
-        this.setPreferredSize(new Dimension(Constants.COLS * tileSize, Constants.ROWS * tileSize));
+        this.setPreferredSize(new Dimension(Constants.COLS * TILE_SIZE, Constants.ROWS * TILE_SIZE));
 
         this.addMouseListener(event);
         this.addMouseMotionListener(event);
@@ -133,8 +133,8 @@ public class Board extends JPanel {
         move.piece.col = move.newCol;
         move.piece.row = move.newRow;
 
-        move.piece.xPosition = move.newCol * tileSize;
-        move.piece.yPosition = move.newRow * tileSize;
+        move.piece.xPosition = move.newCol * TILE_SIZE;
+        move.piece.yPosition = move.newRow * TILE_SIZE;
 
         if (move.piece instanceof Pawn) {                   // if move executed by pawn, pawn.firstMove = false;
             ((Pawn) move.piece).setFirstMove(false);
@@ -180,7 +180,7 @@ public class Board extends JPanel {
                 rook = getPiece(0, move.piece.row);
                 rook.col = 3;
             }
-            rook.xPosition = rook.col * tileSize;
+            rook.xPosition = rook.col * TILE_SIZE;
             ((King) move.piece).setFirstMove(false);
             ((Rook) rook).setFirstMove(false);
         }
@@ -216,24 +216,11 @@ public class Board extends JPanel {
 
     public boolean isMoveLegal(Move move){
 
-        if(endGame){
-            return false;
-        }
-
-        if(move.piece.colorOfTeam != whiteMove ){
-            return false;
-        }
-
-        if(isSameTeam(move.piece, move.capture)){
-            return false;
-        }
-        if(!move.piece.isMovementLegal(move.newCol, move.newRow)){
-            return false;
-        }
-        if(move.piece.moveOverlapPiece(move.newCol, move.newRow)){
-            return false;
-        }
-        if(checkDetector.isKingCheck(move)){
+        if(endGame || move.piece.colorOfTeam != whiteMove  ||
+                isSameTeam(move.piece, move.capture) ||
+                !move.piece.isMovementLegal(move.newCol, move.newRow) ||
+                move.piece.moveOverlapPiece(move.newCol, move.newRow) ||
+                checkDetector.isKingCheck(move)){
             return false;
         }
 
@@ -277,7 +264,7 @@ public class Board extends JPanel {
         for(int row = 0; row < Constants.ROWS; row++){
             for(int col = 0; col < Constants.COLS; col++){
                 graphics.setColor((col + row) % 2 == 0 ? color1 : color2);
-                graphics.fillRect(col * tileSize, row * tileSize, tileSize, tileSize);
+                graphics.fillRect(col * TILE_SIZE, row * TILE_SIZE, TILE_SIZE, TILE_SIZE);
             }
         }
 
@@ -286,11 +273,11 @@ public class Board extends JPanel {
                 for (int c = 0; c < Constants.COLS; c++) {
                     if (isMoveLegal(new Move(this, currentPiece, c, r)) && getPiece(c, r) == null) {
                         graphics.setColor(new Color(70, 180, 60, 200));
-                        graphics.fillOval(c * tileSize + 3 * (tileSize/8), r * tileSize + 3 * (tileSize/8), tileSize/4, tileSize/4);  // col * tileSize + tileSize/2 - tileSize/8 (cause width = tileSize/4)
+                        graphics.fillOval(c * TILE_SIZE+ 3 * (TILE_SIZE/8), r * TILE_SIZE+ 3 * (TILE_SIZE/8), TILE_SIZE/4, TILE_SIZE/4);  // col * tileSize + tileSize/2 - tileSize/8 (cause width = tileSize/4)
                     } else if(isMoveLegal(new Move(this, currentPiece, c, r)) && getPiece(c, r) != null){
                         graphics.setColor(new Color(70, 180, 60, 200));
                         graphics.setStroke(new BasicStroke(4));
-                        graphics.drawOval(c * tileSize, r * tileSize, tileSize, tileSize);
+                        graphics.drawOval(c * TILE_SIZE, r * TILE_SIZE, TILE_SIZE, TILE_SIZE);
                     }
                 }
             }

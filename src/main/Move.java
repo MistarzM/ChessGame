@@ -1,15 +1,16 @@
 package main;
 
 import pieces.Piece;
+
 public class Move {
 
-    int prevCol;
-    int prevRow;
-    int newCol;
-    int newRow;
+    public int prevCol;
+    public int prevRow;
+    public int newCol;
+    public int newRow;
 
-    Piece piece;
-    Piece capture;
+    public Piece piece;
+    public Piece capture;
 
     public Move(Board board, Piece piece, int newCol, int newRow){
 

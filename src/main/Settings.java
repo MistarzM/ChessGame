@@ -22,7 +22,7 @@ public class Settings extends JPanel {
 
 
         this.initialSize = menu.getSize();
-        this.initialTileSize = Board.tileSize;
+        this.initialTileSize = Board.TILE_SIZE;
         this.initialColor1 = Board.color1;
         this.initialColor2 = Board.color2;
 
@@ -40,17 +40,17 @@ public class Settings extends JPanel {
 
         smallButton.addActionListener(e-> {
             menu.setSize(new Dimension(500, 500));
-            Board.tileSize = 50;
+            Board.TILE_SIZE = 50;
         });
 
         mediumButton.addActionListener(e-> {
             menu.setSize(new Dimension(800, 800));
-            Board.tileSize = 80;
+            Board.TILE_SIZE= 80;
         });
 
         bigButton.addActionListener(e-> {
             menu.setSize(new Dimension(1000, 1000));
-            Board.tileSize = 100;
+            Board.TILE_SIZE = 100;
         });
 
         ButtonGroup buttonGroup = new ButtonGroup();
@@ -91,7 +91,7 @@ public class Settings extends JPanel {
         backButton.setFont(new Font("Arial", Font.BOLD, 20));
         backButton.addActionListener(e ->{
             menu.setSize(initialSize);
-            Board.tileSize = initialTileSize;
+            Board.TILE_SIZE= initialTileSize;
             Board.color1 = initialColor1;
             Board.color2 = initialColor2;
             menu.showMenu();

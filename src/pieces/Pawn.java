@@ -10,11 +10,11 @@ public class Pawn extends Piece{
     private boolean isFirstMove;
 
     public Pawn(Board board, boolean colorOfTeam, int col, int row){
-        super(board, "Pawn", colorOfTeam, col, row, col * Board.tileSize, row*Board.tileSize);
+        super(board, "Pawn", colorOfTeam, col, row, col * Board.TILE_SIZE, row*Board.TILE_SIZE);
 
         this.isFirstMove = true;
 
-        this.sprite = (colorOfTeam ? LoadAndSave.GetImg(LoadAndSave.WHITE_PAWN) : LoadAndSave.GetImg(LoadAndSave.BLACK_PAWN)).getScaledInstance(Board.tileSize, Board.tileSize, BufferedImage.SCALE_SMOOTH);
+        this.sprite = (colorOfTeam ? LoadAndSave.GetImg(LoadAndSave.WHITE_PAWN) : LoadAndSave.GetImg(LoadAndSave.BLACK_PAWN)).getScaledInstance(Board.TILE_SIZE, Board.TILE_SIZE, BufferedImage.SCALE_SMOOTH);
     }
 
     public void setFirstMove(boolean firstMove){
