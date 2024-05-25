@@ -1,13 +1,14 @@
 package pieces;
 
+import main.Game;
 import main.Board;
 import utils.LoadAndSave;
 
 import java.awt.image.BufferedImage;
 
 public class Queen extends Piece{
-    public Queen(Board board, boolean colorOfTeam, int col, int row){
-        super(board, "Queen", colorOfTeam, col, row, col * Board.TILE_SIZE, row * Board.TILE_SIZE);
+    public Queen(Game game, boolean colorOfTeam, int col, int row){
+        super(game, "Queen", colorOfTeam, col, row, col * Board.TILE_SIZE, row * Board.TILE_SIZE);
 
         this.sprite = (colorOfTeam ? LoadAndSave.GetImg(LoadAndSave.WHITE_QUEEN) : LoadAndSave.GetImg(LoadAndSave.BLACK_QUEEN)).getScaledInstance(Board.TILE_SIZE, Board.TILE_SIZE, BufferedImage.SCALE_SMOOTH);
     }
@@ -25,19 +26,19 @@ public class Queen extends Piece{
 
         if(this.row == row){
             for(int c = this.col + colDirection; c != col; c += colDirection){
-                if(board.getPiece(c, this.row) != null){
+                if(game.getPiece(c, this.row) != null){
                     return true;
                 }
             }
         } else if(this.col == col){
             for(int r = this.row + rowDirection; r != row; r += rowDirection){
-                if(board.getPiece(this.col, r) != null){
+                if(game.getPiece(this.col, r) != null){
                     return true;
                 }
             }
         } else if(Math.abs(this.row - row) == Math.abs(this.col - col)){
             for(int i = 1; i < Math.abs(this.col - col); ++i){
-                if(board.getPiece(this.col + i * colDirection, this.row + i * rowDirection) != null){
+                if(game.getPiece(this.col + i * colDirection, this.row + i * rowDirection) != null){
                     return true;
                 }
             }

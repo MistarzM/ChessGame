@@ -4,10 +4,10 @@ import pieces.Piece;
 import utils.Constants;
 
 public class CheckDetector {
-    private Board board;
+    private Game game ;
 
-    public CheckDetector(Board board) {
-        this.board = board;
+    public CheckDetector(Game game) {
+        this.game = game;
     }
 
     public boolean isKingCheck(Move move){
@@ -20,7 +20,7 @@ public class CheckDetector {
         int kingCol = king.col;
         int kingRow = king.row;
 
-        if(board.currentPiece != null && board.currentPiece.pieceName.equals("King")){
+        if(game.currentPiece != null && game.currentPiece.pieceName.equals("King")){
             kingCol = move.newCol;
             kingRow = move.newRow;
         }
@@ -42,7 +42,7 @@ public class CheckDetector {
     }
 
     public Piece getKing(boolean colorOfTeam){
-        for(Piece p : board.piecesList){
+        for(Piece p : game.piecesList){
             if(p.pieceName.equals("King") && p.colorOfTeam == colorOfTeam){
                 return p;
             }
@@ -55,9 +55,9 @@ public class CheckDetector {
             if(kingCol + (i * colValue) == col && kingRow + (i * rowValue) == row){
                 break;
             }
-            Piece piece = board.getPiece(kingCol + (i* colValue), kingRow + (i * rowValue));
-            if(piece  != null && piece != board.currentPiece) {
-                if(!board.isSameTeam(piece, king) && (piece.pieceName.equals("Rook") || piece.pieceName.equals("Queen"))){
+            Piece piece = game.getPiece(kingCol + (i* colValue), kingRow + (i * rowValue));
+            if(piece  != null && piece != game.currentPiece) {
+                if(!game.isSameTeam(piece, king) && (piece.pieceName.equals("Rook") || piece.pieceName.equals("Queen"))){
                     return true;
                 }
                 break;
@@ -71,9 +71,9 @@ public class CheckDetector {
             if(kingCol - (i * colValue) == col && kingRow - (i * rowValue) == row){
                 break;
             }
-            Piece piece = board.getPiece(kingCol - (i* colValue), kingRow - (i * rowValue));
-            if(piece  != null && piece != board.currentPiece) {
-                if(!board.isSameTeam(piece, king) && (piece.pieceName.equals("Bishop") || piece.pieceName.equals("Queen"))){
+            Piece piece = game.getPiece(kingCol - (i* colValue), kingRow - (i * rowValue));
+            if(piece  != null && piece != game.currentPiece) {
+                if(!game.isSameTeam(piece, king) && (piece.pieceName.equals("Bishop") || piece.pieceName.equals("Queen"))){
                     return true;
                 }
                 break;
@@ -83,54 +83,54 @@ public class CheckDetector {
     }
 
     private boolean isKingCheckedByKnight(int col, int row, Piece king, int kingCol, int kingRow){
-        return checkKnight(board.getPiece(kingCol - 1, kingRow - 2), king , col, row) ||
-                checkKnight(board.getPiece(kingCol + 1, kingRow - 2), king , col, row) ||
-                checkKnight(board.getPiece(kingCol + 2, kingRow - 1), king , col, row) ||
-                checkKnight(board.getPiece(kingCol + 2, kingRow + 1), king , col, row) ||
-                checkKnight(board.getPiece(kingCol + 1, kingRow + 2), king , col, row) ||
-                checkKnight(board.getPiece(kingCol - 1, kingRow + 2), king , col, row) ||
-                checkKnight(board.getPiece(kingCol - 2, kingRow + 1), king , col, row) ||
-                checkKnight(board.getPiece(kingCol - 2, kingRow - 1), king , col, row);
+        return checkKnight(game.getPiece(kingCol - 1, kingRow - 2), king , col, row) ||
+                checkKnight(game.getPiece(kingCol + 1, kingRow - 2), king , col, row) ||
+                checkKnight(game.getPiece(kingCol + 2, kingRow - 1), king , col, row) ||
+                checkKnight(game.getPiece(kingCol + 2, kingRow + 1), king , col, row) ||
+                checkKnight(game.getPiece(kingCol + 1, kingRow + 2), king , col, row) ||
+                checkKnight(game.getPiece(kingCol - 1, kingRow + 2), king , col, row) ||
+                checkKnight(game.getPiece(kingCol - 2, kingRow + 1), king , col, row) ||
+                checkKnight(game.getPiece(kingCol - 2, kingRow - 1), king , col, row);
     }
 
     private boolean checkKnight(Piece p, Piece k, int col, int row){
-        return p != null && !board.isSameTeam(p, k) && p.pieceName.equals("Knight") && !(p.col == col && p.row == row);
+        return p != null && !game.isSameTeam(p, k) && p.pieceName.equals("Knight") && !(p.col == col && p.row == row);
     }
 
     private boolean isKngCheckedByKing(Piece k, int kingCol, int kingRow){
-        return checkKing(board.getPiece(kingCol - 1, kingRow - 1), k) ||
-                 checkKing(board.getPiece(kingCol + 1, kingRow - 1), k) ||
-                 checkKing(board.getPiece(kingCol, kingRow - 1), k) ||
-                 checkKing(board.getPiece(kingCol - 1, kingRow), k) ||
-                 checkKing(board.getPiece(kingCol + 1, kingRow), k) ||
-                 checkKing(board.getPiece(kingCol - 1, kingRow + 1), k) ||
-                 checkKing(board.getPiece(kingCol + 1, kingRow + 1), k) ||
-                 checkKing(board.getPiece(kingCol, kingRow + 1), k);
+        return checkKing(game.getPiece(kingCol - 1, kingRow - 1), k) ||
+                 checkKing(game.getPiece(kingCol + 1, kingRow - 1), k) ||
+                 checkKing(game.getPiece(kingCol, kingRow - 1), k) ||
+                 checkKing(game.getPiece(kingCol - 1, kingRow), k) ||
+                 checkKing(game.getPiece(kingCol + 1, kingRow), k) ||
+                 checkKing(game.getPiece(kingCol - 1, kingRow + 1), k) ||
+                 checkKing(game.getPiece(kingCol + 1, kingRow + 1), k) ||
+                 checkKing(game.getPiece(kingCol, kingRow + 1), k);
     }
 
     private boolean checkKing(Piece p, Piece k){
-        return p != null && !board.isSameTeam(p, k) && p.pieceName.equals("King");
+        return p != null && !game.isSameTeam(p, k) && p.pieceName.equals("King");
     }
 
     private boolean isKingCheckedByPawn(int col, int row, Piece k, int kingCol, int kingRow){
         int colorVal = k.colorOfTeam ? -1 : 1;
-        return checkPawn(board.getPiece(kingCol + 1, kingRow + colorVal), k, col, row) ||
-                checkPawn(board.getPiece(kingCol - 1, kingRow + colorVal), k, col, row) ;
+        return checkPawn(game.getPiece(kingCol + 1, kingRow + colorVal), k, col, row) ||
+                checkPawn(game.getPiece(kingCol - 1, kingRow + colorVal), k, col, row) ;
     }
 
     private boolean checkPawn(Piece p, Piece k, int col ,int row){
-        return p != null && !board.isSameTeam(p, k) && p.pieceName.equals("Pawn") && !(p.col == col && p.row == row);
+        return p != null && !game.isSameTeam(p, k) && p.pieceName.equals("Pawn") && !(p.col == col && p.row == row);
     }
 
     public boolean gameOver(Piece k) {
 
-        for(Piece p  : board.piecesList){
-            if(board.isSameTeam(p, k)) {
-                board.currentPiece = p == k ? k : null;
+        for(Piece p  : game.piecesList){
+            if(game.isSameTeam(p, k)) {
+                game.currentPiece = p == k ? k : null;
                 for(int row = 0; row < Constants.ROWS; row++){
                     for(int col = 0; col < Constants.COLS; col++){
-                        Move move = new Move(board, p, col, row);
-                        if(board.isMoveLegal(move)){
+                        Move move = new Move(game, p, col, row);
+                        if(game.isMoveLegal(move)){
                             return false;
                         }
                     }

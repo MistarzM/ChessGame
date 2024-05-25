@@ -1,6 +1,7 @@
 package pieces;
 
 import main.Board;
+import main.Game;
 import utils.LoadAndSave;
 
 import java.awt.image.BufferedImage;
@@ -8,8 +9,8 @@ import java.awt.image.BufferedImage;
 public class Rook extends Piece{
 
     private boolean isFirstMove;        // for castling
-    public Rook(Board board, boolean colorOfTeam, int col, int row){
-        super(board, "Rook", colorOfTeam, col, row, col * Board.TILE_SIZE, row*Board.TILE_SIZE);
+    public Rook(Game game, boolean colorOfTeam, int col, int row){
+        super(game, "Rook", colorOfTeam, col, row, col * Board.TILE_SIZE, row*Board.TILE_SIZE);
 
 
         this.isFirstMove = true;
@@ -37,13 +38,13 @@ public class Rook extends Piece{
 
         if(this.row == row){
             for(int c = this.col + colDirection; c != col; c += colDirection){
-                if(board.getPiece(c, this.row) != null){
+                if(game.getPiece(c, this.row) != null){
                     return true;
                 }
             }
         } else if(this.col == col){
             for(int r = this.row + rowDirection; r != row; r += rowDirection){
-                if(board.getPiece(this.col, r) != null){
+                if(game.getPiece(this.col, r) != null){
                     return true;
                 }
             }

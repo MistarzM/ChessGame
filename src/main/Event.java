@@ -4,15 +4,15 @@ import pieces.Piece;
 
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseAdapter;
-import java.awt.event.MouseMotionListener;
-import java.awt.event.MouseListener;
 
 
 public class Event extends MouseAdapter {
+    Game game;
     Board board;
 
-    public Event(Board board){
+    public Event(Game game, Board board){
         this.board = board;
+        this.game = game;
     }
 
     @Override
@@ -20,18 +20,18 @@ public class Event extends MouseAdapter {
         int col = e.getX() / Board.TILE_SIZE;
         int row = e.getY() / Board.TILE_SIZE;
 
-        Piece piecePosition = board.getPiece(col, row);
+        Piece piecePosition = game.getPiece(col, row);
 
         if(piecePosition != null){
-            board.currentPiece = piecePosition;
+            game.currentPiece = piecePosition;
         }
     }
 
     @Override
     public void mouseDragged(MouseEvent e){
-         if(board.currentPiece != null){
-             board.currentPiece.xPosition = e.getX() - Board.TILE_SIZE / 2;
-             board.currentPiece.yPosition = e.getY() - Board.TILE_SIZE/ 2;
+         if(game.currentPiece != null){
+             game.currentPiece.xPosition = e.getX() - Board.TILE_SIZE / 2;
+             game.currentPiece.yPosition = e.getY() - Board.TILE_SIZE/ 2;
 
              board.repaint();
          }
@@ -43,18 +43,18 @@ public class Event extends MouseAdapter {
         int col = e.getX() / Board.TILE_SIZE;
         int row = e.getY() / Board.TILE_SIZE;
 
-        if(board.currentPiece != null){
-            Move move = new Move(board, board.currentPiece, col, row);
+        if(game.currentPiece != null){
+            Move move = new Move(game, game.currentPiece, col, row);
 
-            if(board.isMoveLegal(move)){
-                board.performMove(move);
+            if(game.isMoveLegal(move)){
+                game.performMove(move);
             } else {
-                board.currentPiece.xPosition = board.currentPiece.col * Board.TILE_SIZE;
-                board.currentPiece.yPosition = board.currentPiece.row * Board.TILE_SIZE;
+                game.currentPiece.xPosition = game.currentPiece.col * Board.TILE_SIZE;
+                game.currentPiece.yPosition = game.currentPiece.row * Board.TILE_SIZE;
             }
         }
 
-        board.currentPiece = null;
+        game.currentPiece = null;
         board.repaint();
 
     }

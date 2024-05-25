@@ -1,6 +1,7 @@
 package pieces;
 
 import main.Board;
+import main.Game;
 import main.Move;
 import utils.LoadAndSave;
 
@@ -10,8 +11,8 @@ public class King extends Piece{
 
     private boolean isFirstMove;
 
-    public King(Board board, boolean colorOfTeam, int col, int row){
-        super(board, "King", colorOfTeam, col, row, col * Board.TILE_SIZE, row * Board.TILE_SIZE);
+    public King(Game game, boolean colorOfTeam, int col, int row){
+        super(game, "King", colorOfTeam, col, row, col * Board.TILE_SIZE, row * Board.TILE_SIZE);
 
         this.isFirstMove = true;
 
@@ -33,14 +34,14 @@ public class King extends Piece{
 
         if(this.row == row){
             if(col == 6){
-                Piece rook = board.getPiece(7, row);
+                Piece rook = game.getPiece(7, row);
                 if(rook != null && rook instanceof  Rook && ((Rook) rook).getFirstMove() && isFirstMove){
-                    return board.getPiece(5, row) == null && board.getPiece(6, row) == null && !board.checkDetector.isKingCheck(new Move(board, this, 5, row));
+                    return game.getPiece(5, row) == null && game.getPiece(6, row) == null && !game.checkDetector.isKingCheck(new Move(game, this, 5, row));
                 }
             } else if (col ==2){
-                Piece rook = board.getPiece(0, row);
+                Piece rook = game.getPiece(0, row);
                 if(rook != null && rook instanceof  Rook && ((Rook) rook).getFirstMove() && isFirstMove){
-                    return board.getPiece(3, row) == null && board.getPiece(2, row) == null && board.getPiece(1, row) == null&& !board.checkDetector.isKingCheck(new Move(board, this, 3, row));
+                    return game.getPiece(3, row) == null && game.getPiece(2, row) == null && game.getPiece(1, row) == null&& !game.checkDetector.isKingCheck(new Move(game, this, 3, row));
                 }
             }
         }

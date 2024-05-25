@@ -1,7 +1,20 @@
 package main;
 
+import pieces.Pawn;
+import pieces.Rook;
+import pieces.Knight;
+import pieces.Bishop;
+import pieces.Queen;
+import pieces.King;
 import pieces.Piece;
+import utils.Constants;
+
+import utils.LoadAndSave;
+
 import java.util.ArrayList;
+import java.util.stream.Collectors;
+import javax.swing.ImageIcon;
+import javax.swing.JOptionPane;
 
 public class Game {
     private boolean whiteMove = true; // cause white -> start
@@ -18,47 +31,182 @@ public class Game {
         addPieces();
     }
 
-    public void addPieces() {
-        // Move the addPieces method from Board to here...
+    public void addPieces(){
+        for(int i = 0; i < 8; i++){
+            piecesList.add(new Pawn(this, false, i, 1));
+            piecesList.add(new Pawn(this, true, i, 6));
+        }
+
+        piecesList.add(new Rook(this, false, 0, 0));
+        piecesList.add(new Knight(this, false, 1, 0));
+        piecesList.add(new Bishop(this, false, 2, 0));
+        piecesList.add(new Queen(this, false, 3, 0));
+        piecesList.add(new King(this, false, 4, 0));
+        piecesList.add(new Bishop(this, false, 5, 0));
+        piecesList.add(new Knight(this, false, 6, 0));
+        piecesList.add(new Rook(this, false, 7, 0));
+
+        piecesList.add(new Rook(this, true, 0, 7));
+        piecesList.add(new Knight(this, true, 1, 7));
+        piecesList.add(new Bishop(this, true, 2, 7));
+        piecesList.add(new Queen(this, true, 3, 7));
+        piecesList.add(new King(this, true, 4, 7));
+        piecesList.add(new Bishop(this, true, 5, 7));
+        piecesList.add(new Knight(this, true, 6, 7));
+        piecesList.add(new Rook(this, true, 7, 7));
     }
 
     public Piece getPiece(int col, int row) {
-        // Move the getPiece method from Board to here...
+
+        for(Piece p : piecesList){
+            if (p.col == col && p.row == row){
+                return p;
+            }
+        }
+
+        return null;
     }
 
-    public void capture(Piece piece) {
-        // Move the capture method from Board to here...
+    public void capture(Piece piece){
+        piecesList.remove(piece);
     }
 
-    public void performMove(Move move) {
-        // Move the performMove method from Board to here...
+    public void performMove(Move move){
+
+        if(move.piece.pieceName.equals("Pawn")){
+            performPawnMove(move);
+        }else if(move.piece.pieceName.equals("King")){
+            performKingMove((move));
+        }
+        move.piece.col = move.newCol;
+        move.piece.row = move.newRow;
+
+        move.piece.xPosition = move.newCol * Board.TILE_SIZE;
+        move.piece.yPosition = move.newRow * Board.TILE_SIZE;
+
+        if (move.piece instanceof Pawn) {                   // if move executed by pawn, pawn.firstMove = false;
+            ((Pawn) move.piece).setFirstMove(false);
+        }
+
+
+        capture(move.capture);
+
+        whiteMove = !whiteMove;
+
+        updateGameStatus();
     }
 
-    private void performPawnMove(Move move) {
-        // Move the performPawnMove method from Board to here...
+    public int getTileNumber(int col, int row){
+        return row * Constants.ROWS + col;
     }
 
-    private void performKingMove(Move move) {
-        // Move the performKingMove method from Board to here...
+    private void performPawnMove(Move move){
+
+        if(getTileNumber(move.newCol, move.newRow) == enPassantTile && move.piece.colorOfTeam){
+            move.capture = getPiece(move.newCol, move.newRow + 1);
+        }
+        if(getTileNumber(move.newCol, move.newRow) == enPassantTile && !move.piece.colorOfTeam){
+            move.capture = getPiece(move.newCol, move.newRow - 1);
+        }
+        if(Math.abs(move.piece.row - move.newRow) == 2 && move.piece.colorOfTeam){
+            enPassantTile = getTileNumber(move.newCol, move.newRow + 1);
+        } else if (Math.abs(move.piece.row - move.newRow) == 2 && !move.piece.colorOfTeam){
+            enPassantTile = getTileNumber(move.newCol, move.newRow - 1);
+        } else {
+            enPassantTile = -1;
+        }
+
+        if((move.piece.colorOfTeam && move.newRow == 0) || (!move.piece.colorOfTeam && move.newRow == 7)){
+            promotePawn(move);
+        }
     }
 
-    public void promotePawn(Move move) {
-        // Move the promotePawn method from Board to here...
+    private void performKingMove(Move move){
+
+        if(Math.abs(move.piece.col - move.newCol) == 2){
+            Piece rook;
+            if(move.piece.col < move.newCol) {
+                rook = getPiece(7, move.piece.row);
+                rook.col = 5;
+            } else{
+                rook = getPiece(0, move.piece.row);
+                rook.col = 3;
+            }
+            rook.xPosition = rook.col * Board.TILE_SIZE;
+            ((King) move.piece).setFirstMove(false);
+            ((Rook) rook).setFirstMove(false);
+        }
+
     }
 
-    public boolean isMoveLegal(Move move) {
-        // Move the isMoveLegal method from Board to here...
+    public void promotePawn(Move move){
+        ImageIcon queenPromotion = new ImageIcon(move.piece.colorOfTeam ? LoadAndSave.GetImg(LoadAndSave.WHITE_QUEEN) : LoadAndSave.GetImg(LoadAndSave.BLACK_QUEEN));
+        ImageIcon rookPromotion = new ImageIcon(move.piece.colorOfTeam ? LoadAndSave.GetImg(LoadAndSave.WHITE_ROOK) : LoadAndSave.GetImg(LoadAndSave.BLACK_ROOK));
+        ImageIcon bishopPromotion = new ImageIcon(move.piece.colorOfTeam ? LoadAndSave.GetImg(LoadAndSave.WHITE_BISHOP) : LoadAndSave.GetImg(LoadAndSave.BLACK_BISHOP));
+        ImageIcon knightPromotion = new ImageIcon(move.piece.colorOfTeam ? LoadAndSave.GetImg(LoadAndSave.WHITE_KNIGHT) : LoadAndSave.GetImg(LoadAndSave.BLACK_KNIGHT));
+        Object[] optionToChoose = new Object[] {queenPromotion, rookPromotion, bishopPromotion, knightPromotion};
+        int chosenOption = JOptionPane.showOptionDialog(null, "Choose a piece for promotion", "Pawn Promotion",
+                JOptionPane.DEFAULT_OPTION, JOptionPane.PLAIN_MESSAGE,
+                null, optionToChoose, optionToChoose[0]);
+        switch(chosenOption){
+            case 1:
+                piecesList.add(new Rook(this, move.piece.colorOfTeam, move.newCol, move.newRow));
+                break;
+            case 2:
+                piecesList.add(new Bishop(this, move.piece.colorOfTeam, move.newCol, move.newRow));
+                break;
+            case 3:
+                piecesList.add(new Knight(this, move.piece.colorOfTeam, move.newCol, move.newRow));
+                break;
+            case 0:
+            default:
+                piecesList.add(new Queen(this, move.piece.colorOfTeam, move.newCol, move.newRow));
+                break;
+        }
+        capture(move.piece);
     }
 
-    public boolean isSameTeam(Piece piece1, Piece piece2) {
-        // Move the isSameTeam method from Board to here...
+    public boolean isMoveLegal(Move move){
+
+        if(endGame || move.piece.colorOfTeam != whiteMove  ||
+                isSameTeam(move.piece, move.capture) ||
+                !move.piece.isMovementLegal(move.newCol, move.newRow) ||
+                move.piece.moveOverlapPiece(move.newCol, move.newRow) ||
+                checkDetector.isKingCheck(move)){
+            return false;
+        }
+
+        return true;
     }
 
-    private void updateGameStatus() {
-        // Move the updateGameStatus method from Board to here...
+    public boolean isSameTeam(Piece piece1, Piece piece2){
+        if(piece1 == null || piece2 == null || piece1.colorOfTeam != piece2.colorOfTeam){
+            return false;
+        }
+
+        return true;
     }
 
-    private boolean notEnoughPieces(boolean colorOfTeam) {
-        // Move the notEnoughPieces method from Board to here...
+    private void updateGameStatus(){
+        Piece king =  checkDetector.getKing(whiteMove);
+
+        if(checkDetector.gameOver(king)){
+            if(checkDetector.isKingCheck(new Move(this, king, king.col, king.row))) {
+                new Result(whiteMove ? "Black wins": "White wins");
+            }else {
+                new Result("Stalemate");
+            }
+            endGame = true;
+        } else if(notEnoughPieces(true) && notEnoughPieces(false)){
+            new Result("Insufficient Mating Material draw");
+            endGame = true;
+        }
+    }
+    private boolean notEnoughPieces(boolean colorOfTeam){
+        ArrayList<String> listOfPieces = piecesList.stream().filter(p->p.colorOfTeam == colorOfTeam).map(p->p.pieceName).collect(Collectors.toCollection(ArrayList::new));
+        if(listOfPieces.contains("Queen") || listOfPieces.contains("Rook") || listOfPieces.contains("Pawn")){
+            return false;
+        }
+        return listOfPieces.size() < 3;
     }
 }

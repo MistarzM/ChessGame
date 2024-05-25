@@ -12,7 +12,7 @@ public class Move {
     public Piece piece;
     public Piece capture;
 
-    public Move(Board board, Piece piece, int newCol, int newRow){
+    public Move(Game game, Piece piece, int newCol, int newRow){
 
         this.piece = piece;
         this.prevCol = piece.col;
@@ -20,6 +20,6 @@ public class Move {
         this.newCol = newCol;
         this.newRow = newRow;
 
-        this.capture = board.getPiece(newCol, newRow);
+        this.capture = game.getPiece(newCol, newRow);
     }
 }

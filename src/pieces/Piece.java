@@ -1,6 +1,6 @@
 package pieces;
 
-import main.Board;
+import main.Game;
 
 import java.awt.*;
 
@@ -18,10 +18,10 @@ public class Piece {
 
     Image sprite;
 
-    Board board;
+    Game game;
 
-    public Piece(Board board, String pieceName, boolean colorOfTeam, int col, int row, int xPosition, int yPosition) {
-        this.board = board;
+    public Piece(Game game, String pieceName, boolean colorOfTeam, int col, int row, int xPosition, int yPosition) {
+        this.game = game;
         this.pieceName =  pieceName;
         this.colorOfTeam = colorOfTeam;
         this.col = col;
