@@ -1,7 +1,15 @@
 package main;
 
-import javax.swing.*;
-import java.awt.*;
+import javax.swing.JFrame;
+import javax.swing.JPanel;
+import javax.swing.JLabel;
+import javax.swing.Box;
+import javax.swing.BorderFactory;
+import javax.swing.BoxLayout;
+
+import java.awt.Font;
+import java.awt.Component;
+import java.awt.FontMetrics;
 
 public class Result extends JFrame {
     private JLabel resultLabel;

@@ -12,7 +12,6 @@ import utils.Constants;
 import utils.LoadAndSave;
 
 import java.util.ArrayList;
-import java.util.stream.Collectors;
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 
@@ -73,9 +72,9 @@ public class Game {
 
     public void performMove(Move move){
 
-        if(move.piece.pieceName.equals("Pawn")){
+        if(move.piece.getPieceName().equals("Pawn")){
             performPawnMove(move);
-        }else if(move.piece.pieceName.equals("King")){
+        }else if(move.piece.getPieceName().equals("King")){
             performKingMove((move));
         }
         move.piece.col = move.newCol;
@@ -202,11 +201,21 @@ public class Game {
             endGame = true;
         }
     }
+
     private boolean notEnoughPieces(boolean colorOfTeam){
-        ArrayList<String> listOfPieces = piecesList.stream().filter(p->p.colorOfTeam == colorOfTeam).map(p->p.pieceName).collect(Collectors.toCollection(ArrayList::new));
-        if(listOfPieces.contains("Queen") || listOfPieces.contains("Rook") || listOfPieces.contains("Pawn")){
-            return false;
+        int count = 0;
+        boolean hasMajorPieces = false;
+
+        for(Piece p : piecesList){
+            if(p.colorOfTeam == colorOfTeam){
+                count++;
+                String pieceName = p.getPieceName();
+                if(pieceName.equals("Queen") || pieceName.equals("Rook") || pieceName.equals("Pawn")){
+                    hasMajorPieces = true;
+                }
+            }
         }
-        return listOfPieces.size() < 3;
+
+        return !hasMajorPieces && count < 3;
     }
 }

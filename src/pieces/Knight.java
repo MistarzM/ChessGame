@@ -14,6 +14,7 @@ public class Knight extends Piece{
         this.sprite = (colorOfTeam ? LoadAndSave.GetImg(LoadAndSave.WHITE_KNIGHT) : LoadAndSave.GetImg(LoadAndSave.BLACK_KNIGHT)).getScaledInstance(Board.TILE_SIZE, Board.TILE_SIZE, BufferedImage.SCALE_SMOOTH);
     }
 
+    @Override
     public boolean isMovementLegal(int col, int row){
         if(Math.abs(col - this.col) * Math.abs(row - this.row) == 2){
             return true;

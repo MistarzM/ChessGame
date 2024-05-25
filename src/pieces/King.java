@@ -23,6 +23,7 @@ public class King extends Piece{
         this.isFirstMove = FirstMove;
     }
 
+    @Override
     public boolean isMovementLegal(int col, int row){
         if((Math.abs(this.col - col) == 1 && Math.abs(this.row - row) == 0) || (Math.abs(this.col - col) == 0 && Math.abs(this.row - row) == 1) || (Math.abs(this.col - col) * Math.abs(this.row-row) == 1) || canCastle(col, row)){
             return true;

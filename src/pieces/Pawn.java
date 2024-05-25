@@ -21,6 +21,7 @@ public class Pawn extends Piece{
         this.isFirstMove = firstMove;
     }
 
+    @Override
     public boolean isMovementLegal(int col, int row){
         if (this.colorOfTeam) { // piece is white
             if (this.col == col && row - this.row == -1 && game.getPiece(col, row) == null)

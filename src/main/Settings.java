@@ -2,9 +2,18 @@ package main;
 
 import design.CustomButton;
 
-import javax.swing.*;
-import java.awt.*;
-import java.util.jar.JarEntry;
+import javax.swing.JPanel;
+import javax.swing.BoxLayout;
+import javax.swing.JRadioButton;
+import javax.swing.ButtonGroup;
+import javax.swing.JButton;
+import javax.swing.JColorChooser;
+import javax.swing.JLabel;
+import javax.swing.Box;
+
+import java.awt.Font;
+import java.awt.Dimension;
+import java.awt.Color;
 
 public class Settings extends JPanel {
 

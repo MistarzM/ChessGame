@@ -1,7 +1,10 @@
 package main;
 
-import javax.swing.*;
-import java.awt.*;
+import javax.swing.Timer;
+import javax.swing.JLabel;
+
+import java.awt.Font;
+import java.awt.Color;
 
 public class GameTimer {
 

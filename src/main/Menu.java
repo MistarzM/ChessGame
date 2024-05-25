@@ -1,7 +1,13 @@
 package main;
 
-import javax.swing.*;
-import java.awt.*;
+import javax.swing.JFrame;
+
+import java.awt.Dimension;
+import java.awt.GridBagLayout;
+import java.awt.Color;
+import java.awt.Font;
+import java.awt.GridBagConstraints;
+import java.awt.Insets;
 
 import design.CustomButton;
 
@@ -15,6 +21,7 @@ public class Menu extends JFrame {
         this.setLayout(new GridBagLayout());
         this.setSize(new Dimension(800, 800));
         this.setLocationRelativeTo(null);
+        this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);        // Terminates the process when the window is closed
 
         startButton = new CustomButton("start");
         startButton.setPreferredSize(new Dimension(150, 50));

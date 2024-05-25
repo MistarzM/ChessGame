@@ -13,6 +13,7 @@ public class Queen extends Piece{
         this.sprite = (colorOfTeam ? LoadAndSave.GetImg(LoadAndSave.WHITE_QUEEN) : LoadAndSave.GetImg(LoadAndSave.BLACK_QUEEN)).getScaledInstance(Board.TILE_SIZE, Board.TILE_SIZE, BufferedImage.SCALE_SMOOTH);
     }
 
+    @Override
     public boolean isMovementLegal(int col, int row){
         if(Math.abs(col - this.col) == 0 || Math.abs(row - this.row) == 0 || Math.abs(col - this.col) == Math.abs(row - this.row)){
             return true;
@@ -20,6 +21,7 @@ public class Queen extends Piece{
         return false;
     }
 
+    @Override
     public boolean moveOverlapPiece(int col, int row){
         int rowDirection = (row > this.row) ? 1 : -1;
         int colDirection = (col > this.col) ? 1 : -1;

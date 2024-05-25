@@ -13,12 +13,15 @@ public class Bishop extends Piece{
         this.sprite = (colorOfTeam ? LoadAndSave.GetImg(LoadAndSave.WHITE_BISHOP) : LoadAndSave.GetImg(LoadAndSave.BLACK_BISHOP)).getScaledInstance(Board.TILE_SIZE, Board.TILE_SIZE, BufferedImage.SCALE_SMOOTH);
     }
 
+    @Override
     public boolean isMovementLegal(int col, int row){
         if(Math.abs(col - this.col) == Math.abs(row - this.row)){
             return true;
         }
         return false;
     }
+
+    @Override
     public boolean moveOverlapPiece(int col, int row){
         int rowDirection = (row > this.row) ? 1 : -1;
         int colDirection = (col > this.col) ? 1 : -1;

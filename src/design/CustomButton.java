@@ -1,7 +1,10 @@
 package design;
 
-import javax.swing.*;
-import java.awt.*;
+import javax.swing.JButton;
+
+import java.awt.Color;
+import java.awt.Graphics;
+
 import java.awt.geom.RoundRectangle2D;
 
 public class CustomButton extends JButton{

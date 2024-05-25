@@ -25,6 +25,7 @@ public class Rook extends Piece{
         this.isFirstMove = FirstMove;
     }
 
+    @Override
     public boolean isMovementLegal(int col, int row){
         if(Math.abs(col - this.col) == 0|| Math.abs(row - this.row) == 0){
             return true;
@@ -32,6 +33,7 @@ public class Rook extends Piece{
         return false;
     }
 
+    @Override
     public boolean moveOverlapPiece(int col, int row){
         int rowDirection = (row > this.row) ? 1 : -1;
         int colDirection = (col > this.col) ? 1 : -1;

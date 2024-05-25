@@ -5,8 +5,16 @@ import pieces.Piece;
 import design.CustomButton;
 import utils.Constants;
 
-import javax.swing.*;
-import java.awt.*;
+import javax.swing.JPanel;
+import javax.swing.BorderFactory;
+
+import java.awt.Color;
+import java.awt.BorderLayout;
+import java.awt.Dimension;
+import java.awt.Font;
+import java.awt.Graphics;
+import java.awt.Graphics2D;
+import java.awt.BasicStroke;
 
 public class Board extends JPanel {
 
@@ -14,16 +22,12 @@ public class Board extends JPanel {
     public static Color color1 = new Color(230,190,110);
     public static Color color2 = new Color(180,140,70);
 
-    Event event;
+    private Event event;
     private Menu menu;
-    // timer
     private GameTimer gameTimer;
     private JPanel panel;
     private Game game;
 
-    public JPanel getPanel() {
-        return panel;
-    }
 
     public Board(Menu menu){
         this.menu = menu;
@@ -89,5 +93,9 @@ public class Board extends JPanel {
             p.paint(graphics);
         }
 
+    }
+
+    public JPanel getPanel() {
+        return panel;
     }
 }

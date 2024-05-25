@@ -2,7 +2,8 @@ package pieces;
 
 import main.Game;
 
-import java.awt.*;
+import java.awt.Image;
+import java.awt.Graphics2D;
 
 public class Piece {
 
@@ -13,12 +14,10 @@ public class Piece {
     public int yPosition;
 
     public boolean colorOfTeam;         // true -> white : false -> black
-    public String pieceName;
-    public int value;
+    protected String pieceName;
+    protected Image sprite;
 
-    Image sprite;
-
-    Game game;
+    public Game game;
 
     public Piece(Game game, String pieceName, boolean colorOfTeam, int col, int row, int xPosition, int yPosition) {
         this.game = game;
@@ -42,5 +41,9 @@ public class Piece {
     }
     public boolean moveOverlapPiece(int col, int row){
         return false;
+    }
+
+    public String getPieceName(){
+        return pieceName;
     }
 }
